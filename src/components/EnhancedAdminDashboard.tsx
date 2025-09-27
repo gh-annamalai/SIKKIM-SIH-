@@ -274,57 +274,57 @@ const EnhancedAdminDashboard: React.FC = () => {
   };
 
   return (
-    <div className="py-8 bg-gradient-to-b from-slate-50 to-white min-h-screen">
+    <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black py-12">
       <div className="container mx-auto px-4 max-w-7xl">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center justify-between mb-12">
           <div>
-            <h1 className="text-3xl font-bold text-slate-800 mb-2 flex items-center gap-3">
-              <Shield className="w-8 h-8 text-blue-600" />
+            <h1 className="text-4xl font-bold text-white mb-2 flex items-center gap-3 drop-shadow">
+              <Shield className="w-10 h-10 text-monastery-gold" />
               Enhanced Admin Dashboard
             </h1>
-            <p className="text-slate-600">Comprehensive system management and analytics</p>
+            <p className="text-lg text-gray-300">Comprehensive system management and analytics</p>
           </div>
           <div className="flex items-center gap-4">
             <select
               value={selectedPeriod}
               onChange={(e) => setSelectedPeriod(e.target.value)}
-              className="px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              className="px-3 py-2 bg-black/40 text-white border-monastery-gold rounded-lg focus:ring-2 focus:ring-monastery-gold"
             >
               <option value="7days">Last 7 days</option>
               <option value="30days">Last 30 days</option>
               <option value="90days">Last 90 days</option>
               <option value="1year">Last year</option>
             </select>
-            <Button onClick={adminLogout} variant="outline">
+            <Button onClick={adminLogout} variant="outline" size="lg" className="bg-monastery-gold text-black font-semibold rounded-full shadow-lg hover:bg-yellow-400 border-2 border-monastery-gold">
               Logout
             </Button>
           </div>
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-6 mb-8 max-w-5xl mx-auto">
-            <TabsTrigger value="overview">
+          <TabsList className="grid w-full grid-cols-6 mb-8 max-w-5xl mx-auto bg-black/60 backdrop-blur-lg border-none shadow-2xl rounded-2xl">
+            <TabsTrigger value="overview" className="text-monastery-gold font-bold data-[state=active]:bg-monastery-gold/80 data-[state=active]:text-black data-[state=active]:shadow-lg">
               <BarChart3 className="w-4 h-4 mr-2" />
               Overview
             </TabsTrigger>
-            <TabsTrigger value="users">
+            <TabsTrigger value="users" className="text-monastery-gold font-bold data-[state=active]:bg-monastery-gold/80 data-[state=active]:text-black data-[state=active]:shadow-lg">
               <Users className="w-4 h-4 mr-2" />
               Users
             </TabsTrigger>
-            <TabsTrigger value="content">
+            <TabsTrigger value="content" className="text-monastery-gold font-bold data-[state=active]:bg-monastery-gold/80 data-[state=active]:text-black data-[state=active]:shadow-lg">
               <FileText className="w-4 h-4 mr-2" />
               Content
             </TabsTrigger>
-            <TabsTrigger value="analytics">
+            <TabsTrigger value="analytics" className="text-monastery-gold font-bold data-[state=active]:bg-monastery-gold/80 data-[state=active]:text-black data-[state=active]:shadow-lg">
               <TrendingUp className="w-4 h-4 mr-2" />
               Analytics
             </TabsTrigger>
-            <TabsTrigger value="system">
+            <TabsTrigger value="system" className="text-monastery-gold font-bold data-[state=active]:bg-monastery-gold/80 data-[state=active]:text-black data-[state=active]:shadow-lg">
               <Server className="w-4 h-4 mr-2" />
               System
             </TabsTrigger>
-            <TabsTrigger value="settings">
+            <TabsTrigger value="settings" className="text-monastery-gold font-bold data-[state=active]:bg-monastery-gold/80 data-[state=active]:text-black data-[state=active]:shadow-lg">
               <Settings className="w-4 h-4 mr-2" />
               Settings
             </TabsTrigger>
@@ -335,7 +335,7 @@ const EnhancedAdminDashboard: React.FC = () => {
             <div className="space-y-8">
               {/* Key Metrics */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <Card>
+                <Card className="bg-white text-black border-none shadow-2xl rounded-2xl">
                   <CardContent className="pt-6">
                     <div className="flex items-center justify-between">
                       <div>
@@ -351,7 +351,7 @@ const EnhancedAdminDashboard: React.FC = () => {
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="bg-white text-black border-none shadow-2xl rounded-2xl">
                   <CardContent className="pt-6">
                     <div className="flex items-center justify-between">
                       <div>
@@ -364,7 +364,7 @@ const EnhancedAdminDashboard: React.FC = () => {
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="bg-white text-black border-none shadow-2xl rounded-2xl">
                   <CardContent className="pt-6">
                     <div className="flex items-center justify-between">
                       <div>
@@ -380,7 +380,7 @@ const EnhancedAdminDashboard: React.FC = () => {
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="bg-white text-black border-none shadow-2xl rounded-2xl">
                   <CardContent className="pt-6">
                     <div className="flex items-center justify-between">
                       <div>
