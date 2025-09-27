@@ -1,0 +1,215 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+/* Animation utility for fade-in-up */
+.animate-fade-in-up {
+  animation: fade-in-up 0.7s cubic-bezier(0.4,0,0.2,1) both;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Himalayan-inspired design system for Monastery360 */
+
+@layer base {
+  :root {
+  /* Monastery of Sikkim inspired palette */
+  --background: 36 56% 98%;           /* Warm light beige */
+  --foreground: 24 15% 18%;           /* Rich charcoal brown */
+
+  --card: 0 0% 100%;                  /* White */
+  --card-foreground: 24 15% 18%;      /* Charcoal brown */
+
+  --popover: 36 56% 98%;
+  --popover-foreground: 24 15% 18%;
+
+  /* Primary: Deep maroon */
+  --primary: 350 70% 30%;             /* Deep maroon */
+  --primary-foreground: 36 56% 98%;   /* Warm beige */
+  --primary-light: 350 60% 55%;       /* Lighter maroon */
+  --primary-glow: 44 90% 85%;         /* Soft gold glow */
+
+  /* Secondary: Ochre gold */
+  --secondary: 42 90% 60%;            /* Ochre gold */
+  --secondary-foreground: 24 15% 18%; /* Charcoal brown */
+
+  /* Muted tones: Soft clay pink */
+  --muted: 10 30% 90%;                /* Soft clay pink */
+  --muted-foreground: 24 15% 18%;
+
+  /* Accent: Muted teal */
+  --accent: 180 25% 38%;              /* Muted teal */
+  --accent-foreground: 36 56% 98%;    /* Warm beige */
+  --accent-soft: 180 25% 90%;         /* Very soft teal */
+
+    /* Monastery gold */
+    --monastery-gold: 45 90% 65%;
+    --monastery-gold-foreground: 215 25% 27%;
+
+    /* Prayer flag colors */
+    --prayer-blue: 215 75% 55%;
+    --prayer-white: 0 0% 98%;
+    --prayer-red: 0 75% 55%;
+    --prayer-green: 120 35% 45%;
+    --prayer-yellow: 45 90% 65%;
+
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 210 20% 98%;
+
+    --border: 215 20% 88%;
+    --input: 215 20% 94%;
+    --ring: 215 25% 27%;
+
+    --radius: 0.75rem;
+
+    /* Gradients */
+    --gradient-mountain: linear-gradient(135deg, hsl(215 35% 45%) 0%, hsl(215 25% 27%) 50%, hsl(215 35% 35%) 100%);
+    --gradient-sky: linear-gradient(180deg, hsl(210 45% 85%) 0%, hsl(210 30% 92%) 100%);
+    --gradient-monastery: linear-gradient(135deg, hsl(45 90% 65%) 0%, hsl(25 95% 65%) 100%);
+    --gradient-mist: linear-gradient(180deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.3) 100%);
+
+    /* Shadows with mountain depth */
+    --shadow-soft: 0 2px 8px -2px hsl(215 25% 27% / 0.1);
+    --shadow-medium: 0 4px 16px -4px hsl(215 25% 27% / 0.15);
+    --shadow-large: 0 8px 32px -8px hsl(215 25% 27% / 0.2);
+    --shadow-monastery: 0 12px 48px -12px hsl(25 95% 65% / 0.3);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-monastery: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    /* Typography */
+    --font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    
+    /* Text shadows for better readability on images */
+    --text-shadow-light: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --text-shadow-heavy: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-['Inter',sans-serif] antialiased;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  /* Hero section with mountain backdrop */
+  .hero-gradient {
+    background: var(--gradient-sky);
+    position: relative;
+  }
+
+  .hero-gradient::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-mist);
+    z-index: 1;
+  }
+
+  /* Mountain-inspired shadows */
+  .shadow-monastery {
+    box-shadow: var(--shadow-monastery);
+  }
+
+  .shadow-mountain {
+    box-shadow: var(--shadow-large);
+  }
+
+  /* Monastery card effects */
+  .monastery-card {
+    transition: var(--transition-monastery);
+    backdrop-filter: blur(10px);
+  }
+
+  .monastery-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-monastery);
+  }
+
+  /* Prayer flag animation */
+  .prayer-flags {
+    animation: gentle-wave 3s ease-in-out infinite;
+  }
+
+  @keyframes gentle-wave {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-4px) rotate(1deg); }
+  }
+
+  /* Serene loading animation */
+  .loading-monastery {
+    animation: monastery-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes monastery-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.02); }
+  }
+
+  /* Meditation-inspired focus states */
+  .focus-meditation:focus {
+    outline: none;
+    ring: 2px solid hsl(var(--accent));
+    ring-offset: 2px;
+    ring-offset-color: hsl(var(--background));
+  }
+}
