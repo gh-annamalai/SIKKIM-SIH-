@@ -58,6 +58,8 @@ const EnhancedBookingSystem: React.FC = () => {
   const [activeTab, setActiveTab] = useState('browse');
   const [selectedMonastery, setSelectedMonastery] = useState('');
   const [bookingStep, setBookingStep] = useState(1);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedLocation, setSelectedLocation] = useState('all');
   
   // Enhanced booking form state
   const [bookingData, setBookingData] = useState({
@@ -111,7 +113,7 @@ const EnhancedBookingSystem: React.FC = () => {
       availableSlots: ['09:00', '11:00', '14:00', '16:00'],
       rating: 4.8,
       reviews: 234,
-      image: '/api/placeholder/300/200'
+  image: '/src/assets/rumtek-monastery.jpg'
     },
     {
       id: 'pemayangtse',
@@ -124,7 +126,7 @@ const EnhancedBookingSystem: React.FC = () => {
       availableSlots: ['09:30', '11:30', '14:30'],
       rating: 4.7,
       reviews: 187,
-      image: '/api/placeholder/300/200'
+  image: '/src/assets/pemayangtse-monastery.jpg'
     },
     {
       id: 'tashiding',
@@ -137,7 +139,7 @@ const EnhancedBookingSystem: React.FC = () => {
       availableSlots: ['10:00', '13:00', '15:00'],
       rating: 4.6,
       reviews: 156,
-      image: '/api/placeholder/300/200'
+  image: '/src/assets/tashiding-monastery.jpg'
     }
   ];
 
@@ -262,36 +264,53 @@ const EnhancedBookingSystem: React.FC = () => {
   };
 
   return (
-    <div className="py-12 bg-gradient-to-b from-slate-50 to-white min-h-screen">
+    <div className="py-12 bg-gradient-to-b from-black via-gray-900 to-black">
       <div className="container mx-auto px-4 max-w-7xl">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-slate-800 mb-2">Enhanced Booking System</h1>
-          <p className="text-slate-600 max-w-2xl mx-auto">
+          <h1 className="text-3xl font-bold text-monastery-gold mb-2">Enhanced Booking System</h1>
+          <p className="text-white max-w-2xl mx-auto">
             Book your spiritual journey with our comprehensive reservation system featuring secure payments, guide management, and personalized experiences
           </p>
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-5 mb-8 max-w-4xl mx-auto">
-            <TabsTrigger value="browse">
-              <Search className="w-4 h-4 mr-2" />
+          <TabsList
+            className="flex w-full mb-8 max-w-4xl mx-auto border border-monastery-gold bg-black rounded-xl overflow-hidden"
+          >
+            <TabsTrigger
+              value="browse"
+              className="flex items-center gap-2 px-6 py-2 font-semibold transition-colors data-[state=active]:bg-monastery-gold data-[state=active]:text-black data-[state=active]:rounded-lg data-[state=inactive]:bg-black data-[state=inactive]:text-monastery-gold data-[state=inactive]:border-none data-[state=inactive]:rounded-none text-monastery-gold border-none"
+            >
+              <Search className="w-5 h-5" />
               Browse
             </TabsTrigger>
-            <TabsTrigger value="book">
-              <Calendar className="w-4 h-4 mr-2" />
-              Book Now
+            <TabsTrigger
+              value="book"
+              className="flex items-center gap-2 px-6 py-2 font-semibold transition-colors data-[state=active]:bg-monastery-gold data-[state=active]:text-black data-[state=active]:rounded-lg data-[state=inactive]:bg-black data-[state=inactive]:text-monastery-gold data-[state=inactive]:border-none data-[state=inactive]:rounded-none text-monastery-gold border-none"
+            >
+              <Calendar className="w-5 h-5" />
+              Book Now 
             </TabsTrigger>
-            <TabsTrigger value="my-bookings">
-              <BookOpen className="w-4 h-4 mr-2" />
+            <TabsTrigger
+              value="my-bookings"
+              className="flex items-center gap-2 px-6 py-2 font-semibold transition-colors data-[state=active]:bg-monastery-gold data-[state=active]:text-black data-[state=active]:rounded-lg data-[state=inactive]:bg-black data-[state=inactive]:text-monastery-gold data-[state=inactive]:border-none data-[state=inactive]:rounded-none text-monastery-gold border-none"
+            >
+              <BookOpen className="w-5 h-5" />
               My Bookings
             </TabsTrigger>
-            <TabsTrigger value="guides">
-              <UserCheck className="w-4 h-4 mr-2" />
+            <TabsTrigger
+              value="guides"
+              className="flex items-center gap-2 px-6 py-2 font-semibold transition-colors data-[state=active]:bg-monastery-gold data-[state=active]:text-black data-[state=active]:rounded-lg data-[state=inactive]:bg-black data-[state=inactive]:text-monastery-gold data-[state=inactive]:border-none data-[state=inactive]:rounded-none text-monastery-gold border-none"
+            >
+              <UserCheck className="w-5 h-5" />
               Guides
             </TabsTrigger>
-            <TabsTrigger value="analytics">
-              <BarChart3 className="w-4 h-4 mr-2" />
+            <TabsTrigger
+              value="analytics"
+              className="flex items-center gap-2 px-6 py-2 font-semibold transition-colors data-[state=active]:bg-monastery-gold data-[state=active]:text-black data-[state=active]:rounded-lg data-[state=inactive]:bg-black data-[state=inactive]:text-monastery-gold data-[state=inactive]:border-none data-[state=inactive]:rounded-none text-monastery-gold border-none"
+            >
+              <BarChart3 className="w-5 h-5" />
               Analytics
             </TabsTrigger>
           </TabsList>
@@ -299,7 +318,7 @@ const EnhancedBookingSystem: React.FC = () => {
           {/* Browse Monasteries Tab */}
           <TabsContent value="browse">
             <div className="space-y-6">
-              {/* Search and Filters */}
+              {/* Search and Location Filter */}
               <Card>
                 <CardContent className="pt-6">
                   <div className="flex flex-col md:flex-row gap-4">
@@ -309,45 +328,56 @@ const EnhancedBookingSystem: React.FC = () => {
                         <Input
                           placeholder="Search monasteries, locations, or experiences..."
                           className="pl-10"
+                          value={searchTerm}
+                          onChange={e => setSearchTerm(e.target.value)}
                         />
                       </div>
                     </div>
-                    <Select>
+                    <Select value={selectedLocation} onValueChange={setSelectedLocation}>
                       <SelectTrigger className="w-full md:w-48">
-                        <SelectValue placeholder="Location" />
+                        <SelectValue>{selectedLocation === 'all' ? 'Location' : selectedLocation.charAt(0).toUpperCase() + selectedLocation.slice(1)}</SelectValue>
                       </SelectTrigger>
                       <SelectContent>
+                        <SelectItem value="all">Location</SelectItem>
                         <SelectItem value="gangtok">Gangtok</SelectItem>
                         <SelectItem value="pelling">Pelling</SelectItem>
                         <SelectItem value="tashiding">Tashiding</SelectItem>
                       </SelectContent>
                     </Select>
-                    <Select>
-                      <SelectTrigger className="w-full md:w-48">
-                        <SelectValue placeholder="Difficulty" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="easy">Easy</SelectItem>
-                        <SelectItem value="moderate">Moderate</SelectItem>
-                        <SelectItem value="challenging">Challenging</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <Button variant="outline">
-                      <Filter className="w-4 h-4 mr-2" />
-                      More Filters
-                    </Button>
                   </div>
                 </CardContent>
               </Card>
 
               {/* Monastery Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {availableMonasteries.map((monastery) => (
-                  <Card key={monastery.id} className="hover:shadow-lg transition-shadow">
-                    <div className="aspect-video bg-slate-200 relative">
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                {availableMonasteries
+                  .filter((monastery) => {
+                    // Location filter (partial match, case-insensitive)
+                    if (
+                      selectedLocation !== 'all' &&
+                      !monastery.location.toLowerCase().includes(selectedLocation)
+                    ) {
+                      return false;
+                    }
+                    // Search filter
+                    const term = searchTerm.toLowerCase();
+                    return (
+                      monastery.name.toLowerCase().includes(term) ||
+                      monastery.location.toLowerCase().includes(term) ||
+                      monastery.highlights.some(h => h.toLowerCase().includes(term))
+                    );
+                  })
+                  .map((monastery) => (
+                  <Card key={monastery.id} className="bg-black/60 border-transparent hover:shadow-lg transition-shadow rounded-xl">
+                    <div className="aspect-video bg-slate-200 relative overflow-hidden rounded-t-xl">
+                      <img
+                        src={monastery.image}
+                        alt={monastery.name}
+                        className="absolute inset-0 w-full h-full object-cover rounded-t-xl"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-t-xl" />
                       <div className="absolute bottom-4 left-4 text-white">
-                        <Badge className="bg-white/20 text-white mb-2">
+                        <Badge className="bg-transparent text-white border-white mb-2">
                           ₹{monastery.basePrice} per person
                         </Badge>
                       </div>
@@ -361,30 +391,28 @@ const EnhancedBookingSystem: React.FC = () => {
                     <CardContent className="p-6">
                       <div className="space-y-4">
                         <div>
-                          <h3 className="font-semibold text-lg">{monastery.name}</h3>
-                          <p className="text-slate-600 flex items-center gap-1 text-sm">
-                            <MapPin className="w-4 h-4" />
-                            {monastery.location}
-                          </p>
+                          <h3 className="font-semibold text-lg text-monastery-gold">{monastery.name}</h3>
+                          <div className="flex items-center gap-1 text-sm text-white">
+                            <MapPin className="w-4 h-4 text-white" />
+                            <span>{monastery.location}</span>
+                          </div>
                         </div>
 
                         <div className="space-y-2">
-                          <div className="flex items-center gap-2 text-sm">
-                            <Clock className="w-4 h-4 text-slate-500" />
+                          <div className="flex items-center gap-2 text-sm text-white">
+                            <Clock className="w-4 h-4 text-white" />
                             <span>{monastery.duration}</span>
-                            <span className="text-slate-300">•</span>
-                            <span className="capitalize">{monastery.difficulty}</span>
                           </div>
-                          <div className="text-sm text-slate-600">
+                          <div className="text-sm text-swhite">
                             {monastery.reviews} reviews
                           </div>
                         </div>
 
                         <div className="space-y-2">
-                          <p className="text-sm font-medium">Highlights:</p>
-                          <div className="flex flex-wrap gap-1">
+                          <p className="text-sm font-medium text-monastery-gold">Highlights:</p>
+                          <div className="flex flex-wrap gap-1 ">
                             {monastery.highlights.map((highlight, index) => (
-                              <Badge key={index} variant="outline" className="text-xs">
+                              <Badge key={index} variant="outline" className="text-xs border-white text-white">
                                 {highlight}
                               </Badge>
                             ))}
@@ -393,7 +421,7 @@ const EnhancedBookingSystem: React.FC = () => {
 
                         <div className="flex gap-2 pt-2">
                           <Button 
-                            className="flex-1"
+                            className="flex-1 bg-monastery-gold text-black font-semibold rounded-xl border border-monastery-gold hover:bg-monastery-gold hover:text-black hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] transition-all"
                             onClick={() => {
                               setSelectedMonastery(monastery.id);
                               setBookingData(prev => ({ ...prev, monastery: monastery.id }));
@@ -427,8 +455,8 @@ const EnhancedBookingSystem: React.FC = () => {
                     <div key={step} className="flex items-center">
                       <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
                         bookingStep >= step 
-                          ? 'bg-blue-600 text-white' 
-                          : 'bg-slate-200 text-slate-600'
+                          ? 'bg-monastery-gold text-black' 
+                          : 'bg-white text-black'
                       }`}>
                         {bookingStep > step ? <CheckCircle className="w-5 h-5" /> : step}
                       </div>
@@ -441,16 +469,16 @@ const EnhancedBookingSystem: React.FC = () => {
                   ))}
                 </div>
                 <div className="flex justify-center mt-4 space-x-8">
-                  <span className={`text-sm ${bookingStep >= 1 ? 'text-blue-600' : 'text-slate-500'}`}>
+                  <span className={`text-sm ${bookingStep >= 1 ? 'text-white' : 'text-monastery-gold'}`}>
                     Select Tour
                   </span>
-                  <span className={`text-sm ${bookingStep >= 2 ? 'text-blue-600' : 'text-slate-500'}`}>
+                  <span className={`text-sm ${bookingStep >= 2 ? 'text-white' : 'text-monastery-gold'}`}>
                     Personal Details
                   </span>
-                  <span className={`text-sm ${bookingStep >= 3 ? 'text-blue-600' : 'text-slate-500'}`}>
+                  <span className={`text-sm ${bookingStep >= 3 ? 'text-white' : 'text-monastery-gold'}`}>
                     Payment
                   </span>
-                  <span className={`text-sm ${bookingStep >= 4 ? 'text-blue-600' : 'text-slate-500'}`}>
+                  <span className={`text-sm ${bookingStep >= 4 ? 'text-white' : 'text-monastery-gold'}`}>
                     Confirmation
                   </span>
                 </div>
@@ -1012,13 +1040,13 @@ const EnhancedBookingSystem: React.FC = () => {
           <TabsContent value="my-bookings">
             <div className="space-y-6">
               <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-semibold">My Bookings</h2>
+                <h2 className="text-2xl font-semibold text-monastery-gold">My Bookings</h2>
                 <div className="flex gap-2">
                   <Button variant="outline" size="sm">
                     <Download className="w-4 h-4 mr-2" />
                     Export
                   </Button>
-                  <Button size="sm" onClick={() => setActiveTab('book')}>
+                  <Button size="sm" className ="bg-monastery-gold text-black font-semibold rounded-xl border border-monastery-gold hover:bg-monastery-gold hover:text-black hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] transition-all" onClick={() => setActiveTab('book')}>
                     <Plus className="w-4 h-4 mr-2" />
                     New Booking
                   </Button>
@@ -1096,20 +1124,20 @@ const EnhancedBookingSystem: React.FC = () => {
           {/* Guides Tab */}
           <TabsContent value="guides">
             <div className="text-center py-12">
-              <UserCheck className="w-16 h-16 text-slate-300 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Guide Management</h3>
-              <p className="text-slate-600 mb-4">Manage tour guides, schedules, and assignments</p>
-              <Button variant="outline">Coming Soon</Button>
+              <UserCheck className="w-16 h-16 text-monastery-gold mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-2 text-monastery-gold ">Guide Management</h3>
+              <p className="text-white mb-4">Manage tour guides, schedules, and assignments</p>
+              <Button variant="outline" className="bg-monastery-gold text-black font-semibold rounded-xl border border-monastery-gold hover:bg-monastery-gold hover:text-black hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] transition-all">Coming Soon</Button>
             </div>
           </TabsContent>
 
           {/* Analytics Tab */}
           <TabsContent value="analytics">
             <div className="text-center py-12">
-              <BarChart3 className="w-16 h-16 text-slate-300 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Booking Analytics</h3>
-              <p className="text-slate-600 mb-4">View booking statistics and performance metrics</p>
-              <Button variant="outline">Coming Soon</Button>
+              <BarChart3 className="w-16 h-16 text-monastery-gold mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-2 text-monastery-gold">Booking Analytics</h3>
+              <p className="text-white mb-4">View booking statistics and performance metrics</p>
+              <Button variant="outline" className="bg-monastery-gold text-black font-semibold rounded-xl border border-monastery-gold hover:bg-monastery-gold hover:text-black hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] transition-all">Coming Soon</Button>
             </div>
           </TabsContent>
         </Tabs>

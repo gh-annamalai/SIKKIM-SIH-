@@ -188,34 +188,7 @@ const DigitalArchiveHub: React.FC = () => {
           <TabsContent value="overview">
             <div className="space-y-8">
               {/* Statistics Dashboard */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <TrendingUp className="w-5 h-5 text-blue-600" />
-                    Archive Statistics
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-blue-600 mb-1">{archiveStats.totalManuscripts.toLocaleString()}</div>
-                      <p className="text-sm text-slate-600">Total Manuscripts</p>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-green-600 mb-1">{archiveStats.ocrProcessed.toLocaleString()}</div>
-                      <p className="text-sm text-slate-600">OCR Processed</p>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-purple-600 mb-1">{archiveStats.languagesSupported}</div>
-                      <p className="text-sm text-slate-600">Languages Supported</p>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-orange-600 mb-1">{archiveStats.averageAccuracy}%</div>
-                      <p className="text-sm text-slate-600">AI Accuracy</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              
 
               {/* Featured Capabilities */}
               <div className="grid md:grid-cols-2 gap-6">

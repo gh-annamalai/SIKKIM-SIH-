@@ -259,12 +259,12 @@ const PersonalizedRecommendations: React.FC = () => {
   };
 
   return (
-    <div className="py-12 bg-gradient-to-b from-slate-50 to-white">
+    <div className="py-12 bg-black/60">
       <div className="container mx-auto px-4 max-w-7xl">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-slate-800 mb-2">Personalized Recommendations</h1>
-          <p className="text-slate-600 max-w-2xl mx-auto">
+          <h1 className="text-3xl font-bold text-monastery-gold mb-2">Personalized Recommendations</h1>
+          <p className="text-white max-w-2xl mx-auto">
             Discover content tailored to your interests, learning style, and spiritual journey using AI-powered recommendations
           </p>
         </div>
@@ -416,7 +416,7 @@ const PersonalizedRecommendations: React.FC = () => {
           <div className="lg:col-span-3">
             {/* Header Actions */}
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-semibold">Recommended for You</h2>
+              <h2 className="text-xl font-semibold text-monastery-gold">Recommended for You</h2>
               <div className="flex gap-2">
                 <Button variant="outline" size="sm">
                   <Filter className="w-4 h-4 mr-2" />
@@ -542,7 +542,7 @@ const PersonalizedRecommendations: React.FC = () => {
 
                           {/* Actions */}
                           <div className="flex items-center gap-3">
-                            <Button>
+                            <Button className ="bg-monastery-gold text-black font-semibold rounded-xl border border-monastery-gold hover:bg-monastery-gold hover:text-black hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] transition-all">
                               <BookOpen className="w-4 h-4 mr-2" />
                               Explore
                             </Button>
@@ -587,30 +587,7 @@ const PersonalizedRecommendations: React.FC = () => {
         </div>
 
         {/* AI Insights Section */}
-        <Card className="mt-8">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Brain className="w-5 h-5 text-purple-600" />
-              AI Insights & Analytics
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-blue-600 mb-2">94.2%</div>
-                <p className="text-sm text-slate-600">Recommendation accuracy based on your feedback</p>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-green-600 mb-2">15 days</div>
-                <p className="text-sm text-slate-600">Current learning streak - keep it up!</p>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-purple-600 mb-2">68%</div>
-                <p className="text-sm text-slate-600">Progress toward your next learning milestone</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        
       </div>
     </div>
   );

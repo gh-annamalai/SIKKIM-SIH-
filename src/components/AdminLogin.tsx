@@ -39,47 +39,47 @@ const AdminLogin: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-sky flex items-center justify-center py-16 px-4">
+    <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black flex items-center justify-center py-20 px-4">
       <div className="w-full max-w-md">
         {/* Header */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-10">
           <div className="flex items-center justify-center space-x-2 mb-4">
             <div className="relative">
-              <Mountain className="h-8 w-8 text-primary" />
+              <Mountain className="h-10 w-10 text-monastery-gold drop-shadow" />
               <div className="absolute -top-1 -right-1 w-3 h-3 bg-monastery-gold rounded-full animate-pulse" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-primary">Monastery</h1>
-              <p className="text-xs text-muted-foreground">Government of Sikkim</p>
+              <h1 className="text-2xl font-extrabold text-white tracking-widest drop-shadow">MONASTERY360</h1>
+              <p className="text-xs text-monastery-gold/80">Government of Sikkim</p>
             </div>
           </div>
-          <h2 className="text-2xl font-bold text-primary mb-2">Admin Access</h2>
-          <p className="text-muted-foreground">
+          <h2 className="text-3xl font-bold text-white mb-2 drop-shadow">Admin Access</h2>
+          <p className="text-lg text-gray-300">
             Secure portal for monastery management
           </p>
         </div>
 
         {/* Login Card */}
-        <Card className="monastery-card bg-card/80 backdrop-blur-sm border-border/50">
+        <Card className="monastery-card bg-black/60 backdrop-blur-lg border-none shadow-2xl rounded-2xl">
           <CardHeader className="text-center pb-4">
-            <div className="w-16 h-16 bg-gradient-mountain rounded-full flex items-center justify-center mx-auto mb-4">
-              <Shield className="h-8 w-8 text-primary-foreground" />
+            <div className="w-16 h-16 bg-gradient-to-r from-monastery-gold to-yellow-400 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+              <Shield className="h-8 w-8 text-black" />
             </div>
-            <CardTitle className="text-xl text-card-foreground">
+            <CardTitle className="text-2xl text-white drop-shadow">
               Administrator Login
             </CardTitle>
           </CardHeader>
 
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-6">
               {error && (
                 <Alert variant="destructive">
-                  <AlertDescription>{error}</AlertDescription>
+                  <AlertDescription className="text-white">{error}</AlertDescription>
                 </Alert>
               )}
 
               <div className="space-y-2">
-                <Label htmlFor="email" className="flex items-center gap-2">
+                <Label htmlFor="email" className="flex items-center gap-2 text-white">
                   <Mail className="h-4 w-4" />
                   Email Address
                 </Label>
@@ -89,13 +89,13 @@ const AdminLogin: React.FC = () => {
                   value={formData.email}
                   onChange={handleInputChange('email')}
                   placeholder="admin@sikkim.gov.in"
-                  className="focus-meditation"
+                  className="focus-meditation bg-black/40 text-white border-monastery-gold"
                   required
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password" className="flex items-center gap-2">
+                <Label htmlFor="password" className="flex items-center gap-2 text-white">
                   <Lock className="h-4 w-4" />
                   Password
                 </Label>
@@ -105,19 +105,20 @@ const AdminLogin: React.FC = () => {
                   value={formData.password}
                   onChange={handleInputChange('password')}
                   placeholder="••••••••••"
-                  className="focus-meditation"
+                  className="focus-meditation bg-black/40 text-white border-monastery-gold"
                   required
                 />
               </div>
 
               <Button
                 type="submit"
-                className="w-full bg-gradient-mountain hover:opacity-90"
+                className="w-full bg-monastery-gold text-black font-semibold rounded-full shadow-lg hover:bg-yellow-400 border-2 border-monastery-gold"
                 disabled={isLoading}
+                size="lg"
               >
                 {isLoading ? (
                   <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
+                    <div className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
                     Authenticating...
                   </div>
                 ) : (
@@ -130,11 +131,11 @@ const AdminLogin: React.FC = () => {
             </form>
 
             {/* Demo Credentials */}
-            <div className="mt-6 p-3 bg-accent-soft rounded-lg">
-              <p className="text-xs text-muted-foreground text-center mb-2">
+            <div className="mt-8 p-4 bg-black/80 rounded-xl border border-monastery-gold/30">
+              <p className="text-xs text-gray-300 text-center mb-2">
                 Demo Credentials:
               </p>
-              <div className="text-xs text-center space-y-1">
+              <div className="text-xs text-center space-y-1 text-white">
                 <div>
                   <strong>Email:</strong> admin@sikkim.gov.in
                 </div>
@@ -147,8 +148,8 @@ const AdminLogin: React.FC = () => {
         </Card>
 
         {/* Security Notice */}
-        <div className="mt-6 text-center">
-          <p className="text-xs text-muted-foreground">
+        <div className="mt-8 text-center">
+          <p className="text-xs text-gray-400">
             This is a secure government portal. All access is logged and monitored.
           </p>
         </div>
