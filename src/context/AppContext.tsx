@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from 'react';
 
 interface AppState {
-  currentView: 'landing' | 'community' | 'archive' | 'admin-login' | 'admin-dashboard' | 'experiences' | 'tourism' | 'bookings';
+  currentView: 'landing' | 'community' | 'archive' | 'admin-login' | 'admin-dashboard' | 'experiences' | 'tourism' | 'bookings' | 'about-sikkim';
   isAdminLoggedIn: boolean;
   searchQuery: string;
   selectedMonastery: Monastery | null;

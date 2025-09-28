@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mountain, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAppContext } from '@/context/AppContext';
 
@@ -9,6 +9,7 @@ const Header: React.FC = () => {
 
   const navItems = [
     { label: 'Home', view: 'landing' as const },
+    { label: 'About', view: 'about-sikkim' as const },
     { label: 'Experiences', view: 'experiences' as const },
     { label: 'Tourism', view: 'tourism' as const },
     { label: 'Community', view: 'community' as const },
@@ -41,14 +42,22 @@ const Header: React.FC = () => {
           <div className="flex items-center justify-between relative">
             {/* Logo Left */}
             <div 
-              className="flex items-center space-x-2 cursor-pointer"
+              className="flex items-center space-x-3 cursor-pointer"
               onClick={() => setCurrentView('landing')}
             >
               <div className="relative">
-                <Mountain className="h-8 w-8 text-monastery-gold" />
+                <img 
+                  src="/monastery360-logo.jpeg" 
+                  alt="Monastery360 Logo"
+                  className="h-12 w-12 object-contain"
+                  onError={(e) => {
+                    console.log('Logo failed to load, falling back to Logo.png');
+                    e.currentTarget.src = '/Logo.png';
+                  }}
+                />
               </div>
               <div>
-                <h1 className="text-2xl font-extrabold text-white tracking-widest drop-shadow">MONASTERY360</h1>
+                <h1 className="text-lg font-extrabold text-white tracking-widest drop-shadow">MONASTERY360</h1>
                 <p className="text-xs text-monastery-gold/80">Government of Sikkim</p>
               </div>
             </div>
