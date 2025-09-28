@@ -1,4 +1,5 @@
 import React from 'react';
+import Header from '@/components/Header';
 import { 
   Shield, 
   Calendar, 
@@ -65,33 +66,34 @@ const AdminDashboard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-sky py-8">
-      <div className="container mx-auto px-4">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+    <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black">
+      <Header />
+      <main className="container mx-auto px-4 py-12">
+        {/* Page Title */}
+        <div className="flex items-center justify-between mb-10">
           <div>
-            <h1 className="text-3xl font-bold text-primary flex items-center gap-3">
-              <Shield className="h-8 w-8" />
+            <h1 className="text-4xl font-bold text-white flex items-center gap-3 drop-shadow">
+              <Shield className="h-10 w-10 text-monastery-gold" />
               Admin Dashboard
             </h1>
-            <p className="text-muted-foreground mt-1">
+            <p className="text-lg text-gray-300 mt-2">
               Manage monastery bookings and visitor requests
             </p>
           </div>
-          
           <Button
             onClick={adminLogout}
             variant="outline"
-            className="hover:bg-destructive hover:text-destructive-foreground"
+            size="lg"
+            className="ml-4 bg-monastery-gold text-black font-semibold rounded-full shadow-lg hover:bg-yellow-400 border-2 border-monastery-gold"
           >
-            <LogOut className="h-4 w-4 mr-2" />
+            <LogOut className="h-5 w-5 mr-2" />
             Logout
           </Button>
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <Card className="monastery-card bg-card/80 backdrop-blur-sm">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+          <Card className="monastery-card bg-black/60 backdrop-blur-lg border-none shadow-2xl rounded-2xl">
             <CardContent className="p-6">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-gradient-mountain rounded-lg flex items-center justify-center">
@@ -105,7 +107,7 @@ const AdminDashboard: React.FC = () => {
             </CardContent>
           </Card>
 
-          <Card className="monastery-card bg-card/80 backdrop-blur-sm">
+          <Card className="monastery-card bg-black/60 backdrop-blur-lg border-none shadow-2xl rounded-2xl">
             <CardContent className="p-6">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-monastery-gold rounded-lg flex items-center justify-center">
@@ -119,7 +121,7 @@ const AdminDashboard: React.FC = () => {
             </CardContent>
           </Card>
 
-          <Card className="monastery-card bg-card/80 backdrop-blur-sm">
+          <Card className="monastery-card bg-black/60 backdrop-blur-lg border-none shadow-2xl rounded-2xl">
             <CardContent className="p-6">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-prayer-green rounded-lg flex items-center justify-center">
@@ -133,7 +135,7 @@ const AdminDashboard: React.FC = () => {
             </CardContent>
           </Card>
 
-          <Card className="monastery-card bg-card/80 backdrop-blur-sm">
+          <Card className="monastery-card bg-black/60 backdrop-blur-lg border-none shadow-2xl rounded-2xl">
             <CardContent className="p-6">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-prayer-red rounded-lg flex items-center justify-center">
@@ -148,8 +150,8 @@ const AdminDashboard: React.FC = () => {
           </Card>
         </div>
 
-        {/* Bookings Table */}
-        <Card className="monastery-card bg-card/80 backdrop-blur-sm">
+  {/* Bookings Table */}
+  <Card className="monastery-card bg-black/60 backdrop-blur-lg border-none shadow-2xl rounded-2xl">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Users className="h-5 w-5" />
@@ -159,7 +161,7 @@ const AdminDashboard: React.FC = () => {
           <CardContent>
             {state.bookings.length === 0 ? (
               <Alert>
-                <AlertDescription className="text-center py-8">
+                <AlertDescription className="text-center py-8 text-white">
                   No booking requests yet. Bookings will appear here when visitors submit tour requests.
                 </AlertDescription>
               </Alert>
@@ -168,90 +170,84 @@ const AdminDashboard: React.FC = () => {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Visitor</TableHead>
-                      <TableHead>Monastery</TableHead>
-                      <TableHead>Date & Time</TableHead>
-                      <TableHead>Group</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Actions</TableHead>
+                      <TableHead className="text-white">Visitor</TableHead>
+                      <TableHead className="text-white">Monastery</TableHead>
+                      <TableHead className="text-white">Date & Time</TableHead>
+                      <TableHead className="text-white">Group</TableHead>
+                      <TableHead className="text-white">Status</TableHead>
+                      <TableHead className="text-white">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {state.bookings.map((booking) => (
-                      <TableRow key={booking.id}>
+                      <TableRow key={booking.id} className="hover:bg-black/30">
                         <TableCell>
                           <div className="space-y-1">
-                            <div className="font-medium">{booking.name}</div>
-                            <div className="text-xs text-muted-foreground flex items-center gap-1">
+                            <div className="font-medium text-white">{booking.name}</div>
+                            <div className="text-xs text-gray-300 flex items-center gap-1">
                               <Mail className="h-3 w-3" />
                               {booking.email}
                             </div>
-                            <div className="text-xs text-muted-foreground flex items-center gap-1">
+                            <div className="text-xs text-gray-300 flex items-center gap-1">
                               <Phone className="h-3 w-3" />
                               {booking.phone}
                             </div>
                           </div>
                         </TableCell>
-                        
                         <TableCell>
                           <div className="space-y-1">
-                            <div className="font-medium">{getMonasteryName(booking.monasteryId)}</div>
-                            <div className="text-xs text-muted-foreground flex items-center gap-1">
+                            <div className="font-medium text-white">{getMonasteryName(booking.monasteryId)}</div>
+                            <div className="text-xs text-gray-300 flex items-center gap-1">
                               <Globe className="h-3 w-3" />
                               {booking.language}
                             </div>
                           </div>
                         </TableCell>
-                        
                         <TableCell>
                           <div className="space-y-1">
-                            <div>{new Date(booking.date).toLocaleDateString()}</div>
-                            <div className="text-xs text-muted-foreground">{booking.timeSlot}</div>
+                            <div className="text-white">{new Date(booking.date).toLocaleDateString()}</div>
+                            <div className="text-xs text-gray-300">{booking.timeSlot}</div>
                           </div>
                         </TableCell>
-                        
                         <TableCell>
-                          <div className="text-sm">
+                          <div className="text-sm text-white">
                             {booking.adults} adult{booking.adults !== 1 ? 's' : ''}
                             {booking.children > 0 && (
                               <>, {booking.children} child{booking.children !== 1 ? 'ren' : ''}</>
                             )}
                           </div>
                         </TableCell>
-                        
                         <TableCell>
-                          <Badge className={getStatusColor(booking.status)}>
+                          <Badge className={getStatusColor(booking.status) + ' text-white'}>
                             {getStatusIcon(booking.status)}
                             <span className="ml-1 capitalize">{booking.status}</span>
                           </Badge>
                         </TableCell>
-                        
                         <TableCell>
                           <div className="flex items-center gap-2">
                             <Button
                               size="sm"
                               variant="outline"
+                              className="border-monastery-gold text-monastery-gold"
                               onClick={() => setSelectedBooking(
                                 selectedBooking === booking.id ? null : booking.id
                               )}
                             >
                               <Eye className="h-3 w-3" />
                             </Button>
-                            
                             {booking.status === 'pending' && (
                               <>
                                 <Button
                                   size="sm"
-                                  className="bg-prayer-green hover:bg-prayer-green/90 text-prayer-white"
+                                  className="bg-monastery-gold text-black font-semibold rounded-full shadow-lg hover:bg-yellow-400 border-2 border-monastery-gold"
                                   onClick={() => handleStatusUpdate(booking.id, 'approved')}
                                 >
                                   <CheckCircle className="h-3 w-3 mr-1" />
                                   Approve
                                 </Button>
-                                
                                 <Button
                                   size="sm"
-                                  className="bg-prayer-red hover:bg-prayer-red/90 text-prayer-white"
+                                  className="bg-red-700 text-white font-semibold rounded-full shadow-lg hover:bg-red-800 border-2 border-red-700"
                                   onClick={() => handleStatusUpdate(booking.id, 'declined')}
                                 >
                                   <XCircle className="h-3 w-3 mr-1" />
@@ -270,17 +266,17 @@ const AdminDashboard: React.FC = () => {
 
             {/* Booking Details */}
             {selectedBooking && (
-              <div className="mt-6 p-4 bg-accent-soft rounded-lg">
+              <div className="mt-8 p-6 bg-black/80 rounded-2xl border border-monastery-gold/30">
                 {(() => {
                   const booking = state.bookings.find(b => b.id === selectedBooking);
                   if (!booking) return null;
                   
                   return (
                     <div>
-                      <h4 className="font-semibold text-card-foreground mb-3">
+                      <h4 className="font-semibold text-white mb-4 text-xl">
                         Booking Details - {booking.name}
                       </h4>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-base text-white">
                         <div>
                           <strong>Monastery:</strong> {getMonasteryName(booking.monasteryId)}
                         </div>
@@ -298,14 +294,14 @@ const AdminDashboard: React.FC = () => {
                         </div>
                         <div>
                           <strong>Status:</strong> 
-                          <Badge className={`ml-2 ${getStatusColor(booking.status)}`}>
+                          <Badge className={`ml-2 ${getStatusColor(booking.status)} text-white`}>
                             {booking.status}
                           </Badge>
                         </div>
                         {booking.specialRequests && (
                           <div className="md:col-span-2">
                             <strong>Special Requests:</strong>
-                            <p className="mt-1 text-muted-foreground">{booking.specialRequests}</p>
+                            <p className="mt-1 text-gray-300">{booking.specialRequests}</p>
                           </div>
                         )}
                       </div>
@@ -316,7 +312,7 @@ const AdminDashboard: React.FC = () => {
             )}
           </CardContent>
         </Card>
-      </div>
+      </main>
     </div>
   );
 };

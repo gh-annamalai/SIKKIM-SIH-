@@ -262,35 +262,52 @@ const EnhancedBookingSystem: React.FC = () => {
   };
 
   return (
-    <div className="py-12 bg-gradient-to-b from-slate-50 to-white min-h-screen">
+    <div className="py-12 bg-gradient-to-b from-black via-gray-900 to-black">
       <div className="container mx-auto px-4 max-w-7xl">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-slate-800 mb-2">Enhanced Booking System</h1>
-          <p className="text-slate-600 max-w-2xl mx-auto">
+          <h1 className="text-3xl font-bold text-monastery-gold mb-2">Enhanced Booking System</h1>
+          <p className="text-white max-w-2xl mx-auto">
             Book your spiritual journey with our comprehensive reservation system featuring secure payments, guide management, and personalized experiences
           </p>
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-5 mb-8 max-w-4xl mx-auto">
-            <TabsTrigger value="browse">
+          <TabsList
+            className="grid w-full grid-cols-5 mb-8 max-w-4xl mx-auto border border-monastery-gold bg-black/60 rounded-xl overflow-hidden"
+          >
+            <TabsTrigger
+              value="browse"
+              className="data-[state=active]:bg-monastery-gold data-[state=active]:text-black data-[state=inactive]:bg-black data-[state=inactive]:text-monastery-gold text-monastery-gold border-none rounded-none px-4 py-3 font-semibold transition-colors"
+            >
               <Search className="w-4 h-4 mr-2" />
               Browse
             </TabsTrigger>
-            <TabsTrigger value="book">
+            <TabsTrigger
+              value="book"
+              className="data-[state=active]:bg-monastery-gold data-[state=active]:text-black data-[state=inactive]:bg-black data-[state=inactive]:text-monastery-gold text-monastery-gold border-none rounded-none px-4 py-3 font-semibold transition-colors"
+            >
               <Calendar className="w-4 h-4 mr-2" />
               Book Now
             </TabsTrigger>
-            <TabsTrigger value="my-bookings">
+            <TabsTrigger
+              value="my-bookings"
+              className="data-[state=active]:bg-monastery-gold data-[state=active]:text-black data-[state=inactive]:bg-black data-[state=inactive]:text-monastery-gold text-monastery-gold border-none rounded-none px-4 py-3 font-semibold transition-colors"
+            >
               <BookOpen className="w-4 h-4 mr-2" />
               My Bookings
             </TabsTrigger>
-            <TabsTrigger value="guides">
+            <TabsTrigger
+              value="guides"
+              className="data-[state=active]:bg-monastery-gold data-[state=active]:text-black data-[state=inactive]:bg-black data-[state=inactive]:text-monastery-gold text-monastery-gold border-none rounded-none px-4 py-3 font-semibold transition-colors"
+            >
               <UserCheck className="w-4 h-4 mr-2" />
               Guides
             </TabsTrigger>
-            <TabsTrigger value="analytics">
+            <TabsTrigger
+              value="analytics"
+              className="data-[state=active]:bg-monastery-gold data-[state=active]:text-black data-[state=inactive]:bg-black data-[state=inactive]:text-monastery-gold text-monastery-gold border-none rounded-none px-4 py-3 font-semibold transition-colors"
+            >
               <BarChart3 className="w-4 h-4 mr-2" />
               Analytics
             </TabsTrigger>

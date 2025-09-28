@@ -201,27 +201,27 @@ const ArtifactExplorer: React.FC = () => {
   };
 
   return (
-    <div className="py-12 bg-gradient-to-b from-slate-50 to-white">
+    <div className="py-12 bg-black/60">
       <div className="container mx-auto px-4 max-w-7xl">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-slate-800 mb-2">Artifact Explorer with OCR</h1>
-          <p className="text-slate-600 max-w-2xl mx-auto">
+          <h1 className="text-3xl font-bold text-monastery-gold mb-2">Artifact Explorer with OCR</h1>
+          <p className="text-white max-w-2xl mx-auto">
             Upload ancient manuscripts and artifacts to extract and translate text using advanced Tesseract OCR technology
           </p>
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-3 mb-8 max-w-lg mx-auto">
-            <TabsTrigger value="upload">
+          <TabsList className="grid w-full grid-cols-3 mb-8 max-w-lg mx-auto bg-black/60 border border-monastery-gold rounded-xl p-1">
+            <TabsTrigger value="upload" className="bg-black text-monastery-gold rounded-xl data-[state=active]:bg-monastery-gold data-[state=active]:text-black transition-all flex items-center gap-2">
               <Upload className="w-4 h-4 mr-2" />
               Upload
             </TabsTrigger>
-            <TabsTrigger value="samples">
+            <TabsTrigger value="samples" className="bg-black text-monastery-gold rounded-xl data-[state=active]:bg-monastery-gold data-[state=active]:text-black transition-all flex items-center gap-2">
               <Star className="w-4 h-4 mr-2" />
               Samples
             </TabsTrigger>
-            <TabsTrigger value="results">
+            <TabsTrigger value="results" className="bg-black text-monastery-gold rounded-xl data-[state=active]:bg-monastery-gold data-[state=active]:text-black transition-all flex items-center gap-2">
               <Eye className="w-4 h-4 mr-2" />
               Results
             </TabsTrigger>
@@ -229,32 +229,32 @@ const ArtifactExplorer: React.FC = () => {
 
           {/* Upload Tab */}
           <TabsContent value="upload">
-            <Card className="mb-8">
+            <Card className="mb-8 bg-black/40 border-transparent">
               <CardContent className="pt-6">
                 <div 
                   className="border-2 border-dashed border-slate-300 rounded-lg p-12 text-center hover:border-blue-400 transition-colors cursor-pointer"
                   onClick={() => fileInputRef.current?.click()}
                 >
                   <Upload className="w-16 h-16 text-slate-400 mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold mb-2">Upload Ancient Manuscript or Artifact</h3>
-                  <p className="text-slate-600 mb-4">
+                  <h3 className="text-xl font-semibold mb-2 text-monastery-gold">Upload Ancient Manuscript or Artifact</h3>
+                  <p className=" mb-4 text-white">
                     Drag and drop an image, or click to browse. Supports JPG, PNG, TIFF, and PDF files.
                   </p>
                   <div className="flex items-center justify-center gap-4 mb-4">
-                    <Badge variant="outline">
+                    <Badge variant="outline" className="text-white border-white">
                       <Scan className="w-3 h-3 mr-1" />
                       Tesseract OCR
                     </Badge>
-                    <Badge variant="outline">
+                    <Badge variant="outline" className="text-white border-white">
                       <Languages className="w-3 h-3 mr-1" />
                       Multi-language
                     </Badge>
-                    <Badge variant="outline">
+                    <Badge variant="outline" className="text-white border-white">
                       <Brain className="w-3 h-3 mr-1" />
                       AI-Enhanced
                     </Badge>
                   </div>
-                  <Button>
+                  <Button className ="bg-monastery-gold text-black font-semibold rounded-xl border border-monastery-gold hover:bg-monastery-gold hover:text-black hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] transition-all">
                     <Camera className="w-4 h-4 mr-2" />
                     Choose File
                   </Button>
