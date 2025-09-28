@@ -267,7 +267,7 @@ const TourismServicesHub: React.FC = () => {
 
             <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-6">
               {filteredAccommodations.map((accommodation) => (
-                <Card key={accommodation.id} className="bg-black/60 rounded-2xl text-monastery-gold hover:shadow-[0_0_16px_4px_rgba(255,221,51,0.25)] hover:scale-[1.03] transition-all duration-200 flex flex-col min-h-[500px]" style={{border: 'none'}}>
+                <Card key={accommodation.id} className="bg-black/60 rounded-2xl text-monastery-gold hover:shadow-[0_0_24px_8px_rgba(255,221,51,0.35)] hover:scale-[1.03] transition-all duration-200 flex flex-col min-h-[500px]" style={{border: 'none'}}>
                   <div className="relative">
                     <img 
                       src={accommodation.image} 
@@ -360,7 +360,7 @@ const TourismServicesHub: React.FC = () => {
           <TabsContent value="packages">
             <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-6">
               {travelPackages.map((pkg) => (
-                <Card key={pkg.id} className="bg-black/60 border-transparent hover:shadow-[0_0_16px_4px_rgba(255,221,51,0.25)] hover:scale-[1.03] transition-all duration-200 flex flex-col h-full">
+                <Card key={pkg.id} className="bg-black/60 border-transparent hover:shadow-[0_0_24px_8px_rgba(255,221,51,0.35)] hover:scale-[1.03] transition-all duration-200 flex flex-col h-full">
                   <CardHeader>
                     <div className="flex justify-between items-start">
                       <div>
