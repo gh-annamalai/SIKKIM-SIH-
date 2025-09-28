@@ -5,14 +5,32 @@ import { Button } from './ui/button';
 import { RotateCcw, Headphones, Play } from 'lucide-react';
 import tours from '../lib/tours';
 import { getTourTypeBadge } from '../lib/utils';
+import VirtualTour360 from './VirtualTour360';
 
 const VirtualTours: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTour, setSelectedTour] = useState(null);
+  const [is360TourOpen, setIs360TourOpen] = useState(false);
+  
   const filteredTours = tours.filter(tour =>
     tour.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     tour.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const handleStartExperience = (tour) => {
+    if (tour.type === '360') {
+      setSelectedTour(tour);
+      setIs360TourOpen(true);
+    } else {
+      // Handle other tour types (walkthrough, audio-guide)
+      setSelectedTour(tour);
+    }
+  };
+
+  const handle360TourClose = () => {
+    setIs360TourOpen(false);
+    setSelectedTour(null);
+  };
   return (
     <div className="py-20 bg-gradient-to-b from-black via-gray-900 to-black min-h-screen">
       <div className="container mx-auto px-4">
@@ -80,7 +98,7 @@ const VirtualTours: React.FC = () => {
                 </div>
                 <div className="mt-auto flex justify-center">
                   <Button 
-                    onClick={() => setSelectedTour(tour)}
+                    onClick={() => handleStartExperience(tour)}
                     className="w-5/6 mx-auto mb-4 bg-monastery-gold text-black font-semibold rounded-full shadow-lg hover:bg-yellow-400 focus:ring-2 focus:ring-yellow-300 focus:outline-none transition-all duration-200 border-2 border-monastery-gold"
                   >
                     <Play className="w-4 h-4 mr-2" />
@@ -92,6 +110,15 @@ const VirtualTours: React.FC = () => {
           ))}
         </div>
       </div>
+
+      {/* 360° Virtual Tour Modal */}
+      {selectedTour && (
+        <VirtualTour360 
+          isOpen={is360TourOpen}
+          onClose={handle360TourClose}
+          tourData={selectedTour}
+        />
+      )}
     </div>
   );
 };
