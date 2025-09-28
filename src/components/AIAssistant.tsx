@@ -194,12 +194,12 @@ const AIAssistant: React.FC = () => {
   };
 
   return (
-    <div className="py-12 bg-gradient-to-b from-slate-50 to-white">
+    <div className="py-12 bg-black-60">
       <div className="container mx-auto px-4 max-w-6xl">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-slate-800 mb-2">AI Assistant & Manuscript Analysis</h1>
-          <p className="text-slate-600 max-w-2xl mx-auto">
+          <h1 className="text-3xl font-bold text-monastery-gold mb-2">AI Assistant & Manuscript Analysis</h1>
+          <p className="text-white max-w-2xl mx-auto">
             Get intelligent insights about ancient manuscripts, historical context, and Buddhist teachings with AI-powered analysis
           </p>
         </div>

@@ -35,6 +35,7 @@ import {
 const EnhancedCommunityHub: React.FC = () => {
   const [activeTab, setActiveTab] = useState('forums');
   const [selectedTopic, setSelectedTopic] = useState('all');
+  const [searchQuery, setSearchQuery] = useState("");
 
   const communityStats = {
     totalMembers: 2847,
@@ -163,18 +164,6 @@ const EnhancedCommunityHub: React.FC = () => {
       location: 'Tashiding, West Sikkim'
     },
     {
-      id: 2,
-      type: 'story',
-      title: 'My spiritual awakening journey at Rumtek',
-      author: 'Anna Kumar',
-      avatar: '/src/assets/rumtek-monastery.jpg',
-      excerpt: 'Three months ago, I arrived at Rumtek with a heavy heart and countless questions. Today, I leave with peace and clarity that I never thought possible...',
-      likes: 156,
-      comments: 23,
-      timeAgo: '1 day ago',
-      readTime: '5 min read'
-    },
-    {
       id: 3,
       type: 'video',
       title: 'Prayer Wheel Blessing Ceremony',
@@ -203,78 +192,42 @@ const EnhancedCommunityHub: React.FC = () => {
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-left mb-12">
-          <h1 className="text-5xl font-bold text-white mb-6 drop-shadow">
+          <h1 className="text-5xl font-bold text-monastery-gold mb-6 drop-shadow">
             Community Platform & Engagement
           </h1>
-          <p className="text-xl text-gray-300 max-w-4xl mb-8">
+          <p className="text-xl text-white max-w-4xl mb-8">
             Connect with fellow spiritual seekers, share your monastery experiences, 
             participate in meaningful discussions, and build lasting connections within our community.
           </p>
         </div>
 
         {/* Community Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
-          <Card className="text-center bg-black/60 border-none shadow-lg rounded-xl">
-            <CardContent className="pt-4">
-              <Users className="w-8 h-8 text-blue-600 mx-auto mb-2" />
-              <div className="text-2xl font-bold">{communityStats.totalMembers.toLocaleString()}</div>
-              <div className="text-sm text-slate-600">Total Members</div>
-            </CardContent>
-          </Card>
-          <Card className="text-center bg-black/60 border-none shadow-lg rounded-xl">
-            <CardContent className="pt-4">
-              <TrendingUp className="w-8 h-8 text-green-600 mx-auto mb-2" />
-              <div className="text-2xl font-bold">{communityStats.activeToday}</div>
-              <div className="text-sm text-slate-600">Active Today</div>
-            </CardContent>
-          </Card>
-          <Card className="text-center bg-black/60 border-none shadow-lg rounded-xl">
-            <CardContent className="pt-4">
-              <MessageCircle className="w-8 h-8 text-purple-600 mx-auto mb-2" />
-              <div className="text-2xl font-bold">{communityStats.totalPosts.toLocaleString()}</div>
-              <div className="text-sm text-slate-600">Discussions</div>
-            </CardContent>
-          </Card>
-          <Card className="text-center bg-black/60 border-none shadow-lg rounded-xl">
-            <CardContent className="pt-4">
-              <Camera className="w-8 h-8 text-pink-600 mx-auto mb-2" />
-              <div className="text-2xl font-bold">{communityStats.totalPhotos.toLocaleString()}</div>
-              <div className="text-sm text-slate-600">Photos Shared</div>
-            </CardContent>
-          </Card>
-          <Card className="text-center bg-black/60 border-none shadow-lg rounded-xl">
-            <CardContent className="pt-4">
-              <Award className="w-8 h-8 text-orange-600 mx-auto mb-2" />
-              <div className="text-2xl font-bold">{communityStats.onlineModerators}</div>
-              <div className="text-sm text-slate-600">Online Guides</div>
-            </CardContent>
-          </Card>
-        </div>
+        
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-6 mb-8 max-w-4xl mx-auto">
-            <TabsTrigger value="discussions">
-              <MessageCircle className="w-4 h-4 mr-1" />
+          <TabsList className="grid w-full grid-cols-6 mb-8 max-w-4xl mx-auto bg-black/60 border border-monastery-gold rounded-xl p-1">
+            <TabsTrigger value="discussions" className="text-monastery-gold font-semibold bg-black/60 rounded-xl data-[state=active]:bg-monastery-gold data-[state=active]:text-black transition-all flex items-center gap-2">
+              <MessageCircle className="w-4 h-4" />
               Discussions
             </TabsTrigger>
-            <TabsTrigger value="forums">
-              <MessageSquare className="w-4 h-4 mr-1" />
+            <TabsTrigger value="forums" className="text-monastery-gold font-semibold bg-black/60 rounded-xl data-[state=active]:bg-monastery-gold data-[state=active]:text-black transition-all flex items-center gap-2">
+              <MessageSquare className="w-4 h-4" />
               Forums
             </TabsTrigger>
-            <TabsTrigger value="sharing">
-              <Share2 className="w-4 h-4 mr-1" />
+            <TabsTrigger value="sharing" className="text-monastery-gold font-semibold bg-black/60 rounded-xl data-[state=active]:bg-monastery-gold data-[state=active]:text-black transition-all flex items-center gap-2">
+              <Share2 className="w-4 h-4" />
               Sharing
             </TabsTrigger>
-            <TabsTrigger value="content">
-              <Image className="w-4 h-4 mr-1" />
+            <TabsTrigger value="content" className="text-monastery-gold font-semibold bg-black/60 rounded-xl data-[state=active]:bg-monastery-gold data-[state=active]:text-black transition-all flex items-center gap-2">
+              <Image className="w-4 h-4" />
               Content
             </TabsTrigger>
-            <TabsTrigger value="members">
-              <Users className="w-4 h-4 mr-1" />
+            <TabsTrigger value="members" className="text-monastery-gold font-semibold bg-black/60 rounded-xl data-[state=active]:bg-monastery-gold data-[state=active]:text-black transition-all flex items-center gap-2">
+              <Users className="w-4 h-4" />
               Members
             </TabsTrigger>
-            <TabsTrigger value="profiles">
-              <User className="w-4 h-4 mr-1" />
+            <TabsTrigger value="profiles" className="text-monastery-gold font-semibold bg-black/60 rounded-xl data-[state=active]:bg-monastery-gold data-[state=active]:text-black transition-all flex items-center gap-2">
+              <User className="w-4 h-4" />
               Profiles
             </TabsTrigger>
           </TabsList>
@@ -298,7 +251,7 @@ const EnhancedCommunityHub: React.FC = () => {
             <div className="grid lg:grid-cols-4 gap-8">
               {/* Topic Categories Sidebar */}
               <div className="lg:col-span-1">
-                <Card className="bg-black/60 border-none shadow-lg rounded-xl">
+                <Card className="bg-white border-none shadow-lg rounded-xl">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <Filter className="w-5 h-5 text-blue-600" />
@@ -326,7 +279,7 @@ const EnhancedCommunityHub: React.FC = () => {
                 </Card>
 
                 {/* Featured Members */}
-                <Card className="mt-4 bg-black/60 border-none shadow-lg rounded-xl">
+                <Card className="mt-4 bg-white border-none shadow-lg rounded-xl">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <Star className="w-5 h-5 text-yellow-600" />
@@ -335,7 +288,7 @@ const EnhancedCommunityHub: React.FC = () => {
                   </CardHeader>
                   <CardContent className="space-y-3">
                     {featuredMembers.map((member, index) => (
-                      <div key={index} className="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50">
+                      <div key={index} className="flex items-center gap-3 p-2 rounded-lg bg-white">
                         <Avatar className="w-10 h-10">
                           <AvatarImage src={member.avatar} alt={member.name} />
                           <AvatarFallback>{member.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
@@ -359,25 +312,37 @@ const EnhancedCommunityHub: React.FC = () => {
                 {/* Discussion Actions */}
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-4">
-                    <Button className="bg-gradient-to-r from-blue-600 to-purple-600">
+                    <Button className="bg-monastery-gold text-black font-semibold rounded-xl border border-monastery-gold hover:bg-monastery-gold hover:text-black hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] transition-all">
                       <MessageSquare className="w-4 h-4 mr-2" />
                       Start Discussion
                     </Button>
-                    <Button variant="outline">
-                      <Search className="w-4 h-4 mr-2" />
-                      Search
-                    </Button>
+                    <div className="relative">
+                      <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-monastery-gold" />
+                      <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={e => setSearchQuery(e.target.value)}
+                        placeholder="Search discussions..."
+                        className="pl-12 pr-4 py-2 rounded-xl bg-black/60 text-monastery-gold border border-monastery-gold focus:outline-none focus:ring-2 focus:ring-monastery-gold w-64"
+                      />
+                    </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Bell className="w-5 h-5 text-slate-400" />
-                    <span className="text-sm text-slate-600">Stay updated on replies</span>
+                    <Bell className="w-5 h-5 text-white" />
+                    <span className="text-sm text-white">Stay updated on replies</span>
                   </div>
                 </div>
 
                 {/* Discussion Posts */}
                 <div className="space-y-4">
-                  {recentDiscussions.map((discussion) => (
-                    <Card key={discussion.id} className="bg-black/60 border-none shadow-lg hover:shadow-2xl transition-shadow rounded-xl">
+                  {recentDiscussions
+                    .filter(discussion =>
+                      discussion.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                      discussion.author.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                      discussion.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
+                    )
+                    .map((discussion) => (
+                    <Card key={discussion.id} className="bg-white border-none shadow-lg hover:shadow-2xl transition-shadow rounded-xl">
                       <CardContent className="pt-6">
                         <div className="flex gap-4">
                           <Avatar className="w-12 h-12">
@@ -468,10 +433,10 @@ const EnhancedCommunityHub: React.FC = () => {
               {/* Content Sharing Header */}
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-2xl font-bold mb-2">Community Sharing</h2>
-                  <p className="text-slate-600">Share your monastery experiences, photos, and stories with the community</p>
+                  <h2 className="text-2xl font-bold mb-2 text-monastery-gold">Community Sharing</h2>
+                  <p className="text-white">Share your monastery experiences, photos, and stories with the community</p>
                 </div>
-                <Button className="bg-gradient-to-r from-green-600 to-blue-600">
+                <Button className="bg-monastery-gold text-black font-semibold rounded-xl border border-monastery-gold hover:bg-monastery-gold hover:text-black hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] transition-all">
                   <Camera className="w-4 h-4 mr-2" />
                   Share Content
                 </Button>
@@ -480,7 +445,7 @@ const EnhancedCommunityHub: React.FC = () => {
               {/* Shared Content Grid */}
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {recentSharedContent.map((content) => (
-                  <Card key={content.id} className="bg-black/60 border-none shadow-lg hover:shadow-2xl transition-shadow rounded-xl">
+                  <Card key={content.id} className="bg-black/60 border-none shadow-lg rounded-xl transition-all duration-200 hover:shadow-[0_8px_32px_0_rgba(255,221,51,0.35)] hover:scale-105">
                     {content.type === 'photo' && (
                       <div className="relative">
                         <img 
@@ -488,7 +453,7 @@ const EnhancedCommunityHub: React.FC = () => {
                           alt={content.title}
                           className="w-full h-48 object-cover rounded-t-lg"
                         />
-                        <Badge className="absolute top-2 right-2 bg-white/90 text-slate-700">
+                        <Badge className="absolute top-2 right-2 bg-monastery-gold text-black">
                           Photo
                         </Badge>
                       </div>
@@ -500,7 +465,7 @@ const EnhancedCommunityHub: React.FC = () => {
                           alt={content.title}
                           className="w-full h-48 object-cover rounded-t-lg"
                         />
-                        <Badge className="absolute top-2 right-2 bg-white/90 text-slate-700">
+                        <Badge className="absolute top-2 right-2 bg-monastery-gold text-black">
                           Video
                         </Badge>
                         <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-xs">
@@ -516,23 +481,21 @@ const EnhancedCommunityHub: React.FC = () => {
                     )}
 
                     <CardContent className="pt-4">
-                      <h3 className="font-semibold mb-2">{content.title}</h3>
+                      <h3 className="font-semibold mb-2 text-monastery-gold">{content.title}</h3>
                       
                       <div className="flex items-center gap-2 mb-3">
                         <Avatar className="w-6 h-6">
                           <AvatarImage src={content.avatar} alt={content.author} />
                           <AvatarFallback>{content.author.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                         </Avatar>
-                        <span className="text-sm font-medium">{content.author}</span>
+                        <span className="text-sm font-medium text-white">{content.author}</span>
                         <span className="text-xs text-slate-500">• {content.timeAgo}</span>
                       </div>
 
-                      {content.excerpt && (
-                        <p className="text-sm text-slate-600 mb-3 line-clamp-3">{content.excerpt}</p>
-                      )}
+                      {/* Removed excerpt rendering due to missing property */}
 
                       {content.location && (
-                        <div className="flex items-center gap-1 text-xs text-slate-500 mb-3">
+                        <div className="flex items-center gap-1 text-xs text-white mb-3">
                           <MapPin className="w-3 h-3" />
                           {content.location}
                         </div>
@@ -555,9 +518,7 @@ const EnhancedCommunityHub: React.FC = () => {
                             </div>
                           )}
                         </div>
-                        {content.readTime && (
-                          <span className="text-xs text-slate-500">{content.readTime}</span>
-                        )}
+                        {/* Removed readTime rendering due to missing property */}
                       </div>
                     </CardContent>
                   </Card>
@@ -569,11 +530,11 @@ const EnhancedCommunityHub: React.FC = () => {
           <TabsContent value="members">
             <div className="text-center py-12">
               <Users className="w-16 h-16 text-blue-600 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold mb-4">Community Members</h3>
-              <p className="text-slate-600 mb-6">
+              <h3 className="text-2xl font-bold mb-4 text-monastery-gold">Community Members</h3>
+              <p className="text-white mb-6">
                 Connect with {communityStats.totalMembers.toLocaleString()} spiritual seekers from around the world
               </p>
-              <Button size="lg">
+              <Button size="lg" className="bg-monastery-gold text-black font-semibold rounded-xl border border-monastery-gold hover:bg-monastery-gold hover:text-black hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] transition-all">
                 <Search className="w-4 h-4 mr-2" />
                 Explore Members
               </Button>

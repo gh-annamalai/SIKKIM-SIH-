@@ -209,7 +209,7 @@ const UserProfiles: React.FC = () => {
   };
 
   return (
-    <div className="py-12 bg-gradient-to-b from-slate-50 to-white">
+    <div className="py-12 bg-black/60">
       <div className="container mx-auto px-4 max-w-6xl">
         {/* Profile Header */}
         <div className="relative mb-8">
@@ -263,49 +263,49 @@ const UserProfiles: React.FC = () => {
           <Card className="text-center">
             <CardContent className="pt-4">
               <Mountain className="w-6 h-6 text-blue-600 mx-auto mb-2" />
-              <div className="text-xl font-bold">{userProfile.stats.visitedMonasteries}</div>
+              <div className="text-xl font-bold">{0}</div>
               <div className="text-xs text-slate-600">Monasteries</div>
             </CardContent>
           </Card>
           <Card className="text-center">
             <CardContent className="pt-4">
               <Camera className="w-6 h-6 text-pink-600 mx-auto mb-2" />
-              <div className="text-xl font-bold">{userProfile.stats.photosShared}</div>
+              <div className="text-xl font-bold">{0}</div>
               <div className="text-xs text-slate-600">Photos</div>
             </CardContent>
           </Card>
           <Card className="text-center">
             <CardContent className="pt-4">
               <BookOpen className="w-6 h-6 text-green-600 mx-auto mb-2" />
-              <div className="text-xl font-bold">{userProfile.stats.postsWritten}</div>
+              <div className="text-xl font-bold">{0}</div>
               <div className="text-xs text-slate-600">Posts</div>
             </CardContent>
           </Card>
           <Card className="text-center">
             <CardContent className="pt-4">
               <Heart className="w-6 h-6 text-red-600 mx-auto mb-2" />
-              <div className="text-xl font-bold">{userProfile.stats.helpfulAnswers}</div>
+              <div className="text-xl font-bold">{0}</div>
               <div className="text-xs text-slate-600">Helpful</div>
             </CardContent>
           </Card>
           <Card className="text-center">
             <CardContent className="pt-4">
               <Users className="w-6 h-6 text-purple-600 mx-auto mb-2" />
-              <div className="text-xl font-bold">{userProfile.stats.followers}</div>
+              <div className="text-xl font-bold">{0}</div>
               <div className="text-xs text-slate-600">Followers</div>
             </CardContent>
           </Card>
           <Card className="text-center">
             <CardContent className="pt-4">
               <Users className="w-6 h-6 text-indigo-600 mx-auto mb-2" />
-              <div className="text-xl font-bold">{userProfile.stats.following}</div>
+              <div className="text-xl font-bold">{0}</div>
               <div className="text-xs text-slate-600">Following</div>
             </CardContent>
           </Card>
           <Card className="text-center">
             <CardContent className="pt-4">
               <Star className="w-6 h-6 text-yellow-600 mx-auto mb-2" />
-              <div className="text-xl font-bold">{userProfile.stats.totalKarmaPoints}</div>
+              <div className="text-xl font-bold">{0}</div>
               <div className="text-xs text-slate-600">Karma</div>
             </CardContent>
           </Card>
@@ -335,7 +335,7 @@ const UserProfiles: React.FC = () => {
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center gap-2 pb-4 px-1 border-b-2 transition-colors ${
                     activeTab === tab.id
-                      ? 'border-blue-600 text-blue-600'
+                      ? 'border-monastery-gold text-monastery-gold'
                       : 'border-transparent text-slate-600 hover:text-slate-900'
                   }`}
                 >

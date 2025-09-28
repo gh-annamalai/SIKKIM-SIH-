@@ -51,6 +51,7 @@ const SmartAudioGuides: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [showAIInsights, setShowAIInsights] = useState(true);
+  const [activeTab, setActiveTab] = useState('guides');
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const smartGuides: SmartGuide[] = [
@@ -243,96 +244,101 @@ const SmartAudioGuides: React.FC = () => {
   };
 
   return (
-    <div className="py-20 bg-gradient-to-b from-purple-50 to-white">
+    <div className="py-20 bg-gradient-to-b from-black via-gray-900 to-black min-h-screen">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-slate-800 mb-4">
+          <h2 className="text-4xl font-bold text-monastery-gold mb-4">
             AI-Powered Smart Audio Guides
           </h2>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+          <p className="text-xl text-white max-w-3xl mx-auto">
             Experience intelligent, context-aware guidance that adapts to your interests, 
             location, and knowledge level for a personalized cultural journey
           </p>
+          <div className="flex justify-center mt-8">
+            <input
+              type="text"
+              placeholder="Search for monasteries..."
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              className="w-full max-w-md px-4 py-2 rounded-full bg-black/40 text-white border border-monastery-gold focus:outline-none focus:ring-2 focus:ring-monastery-gold placeholder:text-monastery-gold"
+            />
+          </div>
         </div>
 
-        <Tabs defaultValue="guides" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mb-8">
-            <TabsTrigger value="guides">Smart Guides</TabsTrigger>
-            <TabsTrigger value="experience">Current Guide</TabsTrigger>
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="grid w-full grid-cols-2 mb-8 bg-black/70 border border-monastery-gold/40 rounded-xl p-1">
+            <TabsTrigger value="guides" className="text-monastery-gold font-semibold bg-black/40 rounded-xl data-[state=active]:bg-monastery-gold data-[state=active]:text-black transition-all">Smart Guides</TabsTrigger>
+            <TabsTrigger value="experience" className="text-monastery-gold font-semibold bg-black/40 rounded-xl data-[state=active]:bg-monastery-gold data-[state=active]:text-black transition-all">Current Guide</TabsTrigger>
           </TabsList>
 
           <TabsContent value="guides" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {smartGuides.map((guide) => (
-                <Card key={guide.id} className="overflow-hidden hover:shadow-xl transition-all duration-300">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+              {smartGuides.filter(guide => guide.monastery.toLowerCase().includes(searchQuery.toLowerCase())).map((guide) => (
+                <Card key={guide.id} className="relative overflow-hidden bg-black/60 backdrop-blur-lg border-none shadow-2xl rounded-2xl hover:scale-[1.025] transition-all duration-300 hover:shadow-[0_0_16px_4px_rgba(212,175,55,0.4)] flex flex-col">
                   <div className="relative">
-                    <img
-                      src={guide.image}
-                      alt={guide.name}
-                      className="w-full h-48 object-cover"
-                    />
+                    <img src={guide.image} alt={guide.name} className="w-full h-48 object-cover rounded-t-2xl border-b-2 border-monastery-gold/30" />
                     <div className="absolute top-4 left-4">
-                      <Badge className="bg-purple-100 text-purple-800">
+                      <Badge className="bg-monastery-gold/20 text-monastery-gold border-monastery-gold">
                         <Brain className="w-3 h-3 mr-1" />
                         AI-Powered
                       </Badge>
                     </div>
-                    <div className="absolute top-4 right-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
-                      {guide.totalSegments} segments
+                    <div className="absolute top-4 right-4 bg-black/70 text-monastery-gold px-3 py-1 rounded-full text-sm border border-monastery-gold/40">
+                      {guide.totalSegments} Segments
                     </div>
                   </div>
-
                   <CardHeader>
-                    <CardTitle className="text-xl">{guide.name}</CardTitle>
-                    <p className="text-slate-600">{guide.description}</p>
+                    <CardTitle className="text-2xl text-monastery-gold drop-shadow mb-2">{guide.name}</CardTitle>
+                    <p className="text-white/80 mb-2">{guide.description}</p>
                   </CardHeader>
-
-                  <CardContent className="space-y-4">
+                  <CardContent className="space-y-4 flex-1 flex flex-col pb-20">
                     {/* AI Personality */}
-                    <div className="flex items-center gap-3 p-3 bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg">
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
-                        <Bot className="w-5 h-5 text-white" />
+                    <div className="flex items-center gap-3 p-3 bg-black/40 rounded-lg">
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-monastery-gold to-yellow-700 flex items-center justify-center">
+                        <Bot className="w-5 h-5 text-black" />
                       </div>
                       <div>
-                        <p className="font-medium text-sm">{guide.aiPersonality.name}</p>
-                        <p className="text-xs text-slate-600">{guide.aiPersonality.voice} AI Guide</p>
+                        <p className="font-medium text-sm text-monastery-gold">{guide.aiPersonality.name}</p>
+                        <p className="text-xs text-white">{guide.aiPersonality.voice} AI Guide</p>
                       </div>
                     </div>
-
                     {/* Features */}
                     <div>
-                      <p className="text-sm font-medium text-slate-700 mb-2">Smart Features:</p>
+                      <p className="text-sm font-medium text-monastery-gold mb-2">Smart Features:</p>
                       <div className="grid grid-cols-2 gap-1">
                         {guide.features.map((feature) => (
-                          <div key={feature} className="flex items-center gap-1 text-xs text-slate-600">
-                            <Zap className="w-3 h-3 text-purple-500" />
+                          <div key={feature} className="flex items-center gap-1 text-xs text-white">
+                            <Zap className="w-3 h-3 text-monastery-gold" />
                             {feature}
                           </div>
                         ))}
                       </div>
                     </div>
-
                     {/* Languages */}
                     <div>
-                      <p className="text-sm font-medium text-slate-700 mb-2">Languages:</p>
+                      <p className="text-sm font-medium text-monastery-gold mb-2">Languages:</p>
                       <div className="flex flex-wrap gap-1">
                         {guide.languages.map((lang) => (
-                          <Badge key={lang.code} variant="outline" className="text-xs">
+                          <Badge key={lang.code} variant="outline" className="text-xs border-white text-white bg-transparent">
                             <Globe className="w-3 h-3 mr-1" />
                             {lang.name}
                           </Badge>
                         ))}
                       </div>
                     </div>
-
+                  </CardContent>
+                  <div className="absolute left-0 bottom-0 w-full px-6 pb-6">
                     <Button 
-                      onClick={() => setSelectedGuide(guide)}
-                      className="w-full bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700"
+                      onClick={() => {
+                        setSelectedGuide(guide);
+                        setActiveTab('experience');
+                      }}
+                      className="w-full bg-monastery-gold text-black font-semibold rounded-full shadow-lg hover:bg-yellow-400 focus:ring-2 focus:ring-yellow-300 focus:outline-none transition-all duration-200 border-2 border-monastery-gold"
                     >
                       <Headphones className="w-4 h-4 mr-2" />
                       Activate Smart Guide
                     </Button>
-                  </CardContent>
+                  </div>
                 </Card>
               ))}
             </div>
@@ -342,33 +348,25 @@ const SmartAudioGuides: React.FC = () => {
             {selectedGuide ? (
               <div className="max-w-7xl mx-auto">
                 {/* Guide Header */}
-                <Card className="mb-6">
+                <Card className="mb-6 bg-black/70 border-none shadow-xl backdrop-blur-lg rounded-2xl">
                   <CardHeader>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-4">
-                        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
-                          <Bot className="w-8 h-8 text-white" />
-                        </div>
-                        <div>
-                          <h3 className="text-2xl font-bold">{selectedGuide.aiPersonality.name}</h3>
-                          <p className="text-slate-600">{selectedGuide.name}</p>
-                          <div className="flex items-center gap-2 mt-2">
-                            <Badge className="bg-purple-100 text-purple-800">
-                              <Brain className="w-3 h-3 mr-1" />
-                              AI-Powered
-                            </Badge>
-                            <Badge variant="outline">
-                              <Globe className="w-3 h-3 mr-1" />
-                              {selectedGuide.languages.length} Languages
-                            </Badge>
-                          </div>
-                        </div>
+                    <div className="flex items-center gap-4">
+                      <div className="w-16 h-16 rounded-full bg-gradient-to-br from-monastery-gold to-yellow-700 flex items-center justify-center">
+                        <Bot className="w-8 h-8 text-black" />
                       </div>
-                      <div className="text-right">
-                        <Button variant="outline" size="sm">
-                          <Settings className="w-4 h-4 mr-1" />
-                          Customize
-                        </Button>
+                      <div>
+                        <h3 className="text-2xl font-bold text-monastery-gold">{selectedGuide.aiPersonality.name}</h3>
+                        <p className="text-white/80">{selectedGuide.name}</p>
+                        <div className="flex items-center gap-2 mt-2">
+                          <Badge className="bg-monastery-gold/20 text-monastery-gold">
+                            <Brain className="w-3 h-3 mr-1" />
+                            AI-Powered
+                          </Badge>
+                          <Badge variant="outline" className="border-monastery-gold text-monastery-gold">
+                            <Globe className="w-3 h-3 mr-1" />
+                            {selectedGuide.languages.length} Languages
+                          </Badge>
+                        </div>
                       </div>
                     </div>
                   </CardHeader>
@@ -378,16 +376,16 @@ const SmartAudioGuides: React.FC = () => {
                   {/* Content Browser */}
                   <div className="lg:col-span-2 space-y-6">
                     {/* Search and Filters */}
-                    <Card>
+                    <Card className="mb-6 bg-black/70 border-none shadow-xl backdrop-blur-lg rounded-2xl">
                       <CardContent className="p-4">
                         <div className="space-y-4">
                           <div className="relative">
-                            <Search className="absolute left-3 top-3 w-4 h-4 text-slate-400" />
+                            <Search className="absolute left-3 top-3 w-4 h-4 text-monastery-gold" />
                             <Input
                               placeholder="Ask me anything about the monastery..."
                               value={searchQuery}
                               onChange={(e) => setSearchQuery(e.target.value)}
-                              className="pl-10"
+                              className="pl-10 bg-black/40 text-monastery-gold border border-monastery-gold focus:outline-none focus:ring-2 focus:ring-monastery-gold placeholder:text-monastery-gold"
                             />
                           </div>
                           
@@ -396,11 +394,7 @@ const SmartAudioGuides: React.FC = () => {
                               <button
                                 key={category.id}
                                 onClick={() => setSelectedCategory(category.id)}
-                                className={`px-3 py-1.5 rounded-full text-sm transition-all ${
-                                  selectedCategory === category.id
-                                    ? 'bg-purple-500 text-white'
-                                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                                }`}
+                                className={`px-3 py-1.5 rounded-full text-sm transition-all border border-monastery-gold/40 ${selectedCategory === category.id ? 'bg-monastery-gold text-black font-bold' : 'bg-black/40 text-monastery-gold hover:bg-monastery-gold/20'}`}
                               >
                                 <span className="mr-1">{category.icon}</span>
                                 {category.name}
@@ -416,23 +410,19 @@ const SmartAudioGuides: React.FC = () => {
                       {filteredSegments.map((segment) => (
                         <Card 
                           key={segment.id} 
-                          className={`cursor-pointer transition-all hover:shadow-md ${
-                            currentSegment?.id === segment.id ? 'ring-2 ring-purple-500 bg-purple-50' : ''
-                          }`}
+                          className={`cursor-pointer transition-all hover:shadow-md bg-black/70 border-none shadow-xl backdrop-blur-lg rounded-2xl ${currentSegment?.id === segment.id ? 'ring-2 ring-monastery-gold bg-monastery-gold/10' : ''}`}
                           onClick={() => handleSegmentSelect(segment)}
                         >
                           <CardContent className="p-4">
                             <div className="flex items-start justify-between">
                               <div className="flex-1">
                                 <div className="flex items-center gap-2 mb-2">
-                                  <span className="text-lg">{getCategoryIcon(segment.category)}</span>
-                                  <h4 className="font-medium">{segment.title}</h4>
-                                  <Badge className={getDifficultyColor(segment.difficulty)}>
-                                    {segment.difficulty}
-                                  </Badge>
+                                  <span className="text-lg text-monastery-gold">{getCategoryIcon(segment.category)}</span>
+                                  <h4 className="font-medium text-monastery-gold">{segment.title}</h4>
+                                  
                                 </div>
-                                <p className="text-sm text-slate-600 mb-3">{segment.content}</p>
-                                <div className="flex items-center gap-4 text-xs text-slate-500">
+                                <p className="text-sm text-white mb-3">{segment.content}</p>
+                                <div className="flex items-center gap-4 text-xs text-monastery-gold">
                                   <span className="flex items-center gap-1">
                                     <Clock className="w-3 h-3" />
                                     {formatTime(segment.duration)}
@@ -440,7 +430,7 @@ const SmartAudioGuides: React.FC = () => {
                                   <span>{segment.relatedTopics.length} topics</span>
                                 </div>
                               </div>
-                              <ChevronRight className="w-5 h-5 text-slate-400" />
+                              <ChevronRight className="w-5 h-5 text-monastery-gold" />
                             </div>
                           </CardContent>
                         </Card>
@@ -453,9 +443,9 @@ const SmartAudioGuides: React.FC = () => {
                     {currentSegment ? (
                       <>
                         {/* Audio Player */}
-                        <Card>
+                        <Card className="bg-black/70 border-none shadow-xl backdrop-blur-lg rounded-2xl">
                           <CardHeader>
-                            <CardTitle className="text-lg flex items-center gap-2">
+                            <CardTitle className="text-lg flex items-center gap-2 text-monastery-gold">
                               <span>{getCategoryIcon(currentSegment.category)}</span>
                               {currentSegment.title}
                             </CardTitle>
@@ -467,22 +457,21 @@ const SmartAudioGuides: React.FC = () => {
                               onTimeUpdate={() => setCurrentTime(audioRef.current?.currentTime || 0)}
                               onEnded={() => setIsPlaying(false)}
                             />
-                            
                             <div className="space-y-2">
-                              <div className="flex justify-between text-sm text-slate-500">
+                              <div className="flex justify-between text-sm text-monastery-gold">
                                 <span>{formatTime(currentTime)}</span>
                                 <span>{formatTime(currentSegment.duration)}</span>
                               </div>
                               <Progress 
                                 value={(currentTime / currentSegment.duration) * 100}
-                                className="w-full"
+                                className="w-full bg-monastery-gold/30 [&>div]:bg-monastery-gold"
                               />
                             </div>
-                            
                             <div className="flex items-center justify-center gap-3">
                               <Button
                                 size="sm"
                                 variant="outline"
+                                className="border-monastery-gold text-monastery-gold"
                                 onClick={() => setVolume(Math.max(0, volume - 0.1))}
                               >
                                 <Volume2 className="w-4 h-4" />
@@ -490,7 +479,7 @@ const SmartAudioGuides: React.FC = () => {
                               
                               <Button
                                 onClick={handlePlayPause}
-                                className="bg-gradient-to-r from-purple-500 to-pink-600"
+                                className="bg-monastery-gold text-black font-bold"
                               >
                                 {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
                               </Button>
@@ -498,6 +487,7 @@ const SmartAudioGuides: React.FC = () => {
                               <Button
                                 size="sm"
                                 variant="outline"
+                                className="border-monastery-gold text-monastery-gold"
                                 onClick={() => setVolume(Math.min(1, volume + 0.1))}
                               >
                                 <Volume2 className="w-4 h-4" />
@@ -508,19 +498,19 @@ const SmartAudioGuides: React.FC = () => {
 
                         {/* AI Insights */}
                         {showAIInsights && (
-                          <Card>
+                          <Card className="bg-black/70 border-none shadow-xl backdrop-blur-lg rounded-2xl">
                             <CardHeader>
-                              <CardTitle className="text-lg flex items-center gap-2">
-                                <Brain className="w-5 h-5 text-purple-500" />
+                              <CardTitle className="text-lg flex items-center gap-2 text-monastery-gold">
+                                <Brain className="w-5 h-5 text-monastery-gold" />
                                 AI Insights
                               </CardTitle>
                             </CardHeader>
                             <CardContent>
                               <div className="space-y-3">
                                 {currentSegment.aiInsights.map((insight, index) => (
-                                  <div key={index} className="flex items-start gap-2 p-3 bg-purple-50 rounded-lg">
-                                    <Zap className="w-4 h-4 text-purple-500 mt-0.5 flex-shrink-0" />
-                                    <p className="text-sm text-slate-700">{insight}</p>
+                                  <div key={index} className="flex items-start gap-2 p-3 bg-monastery-gold/10 rounded-lg">
+                                    <Zap className="w-4 h-4 text-monastery-gold mt-0.5 flex-shrink-0" />
+                                    <p className="text-sm text-white">{insight}</p>
                                   </div>
                                 ))}
                               </div>
@@ -529,19 +519,19 @@ const SmartAudioGuides: React.FC = () => {
                         )}
 
                         {/* Related Topics */}
-                        <Card>
+                        <Card className="bg-black/70 border-none shadow-xl backdrop-blur-lg rounded-2xl">
                           <CardHeader>
-                            <CardTitle className="text-lg">Related Topics</CardTitle>
+                            <CardTitle className="text-lg text-monastery-gold">Related Topics</CardTitle>
                           </CardHeader>
                           <CardContent>
                             <div className="space-y-2">
                               {currentSegment.relatedTopics.map((topic, index) => (
                                 <button
                                   key={index}
-                                  className="w-full text-left p-2 rounded hover:bg-slate-50 flex items-center gap-2"
+                                  className="w-full text-left p-2 rounded hover:bg-monastery-gold/10 flex items-center gap-2"
                                 >
-                                  <MessageCircle className="w-4 h-4 text-slate-400" />
-                                  <span className="text-sm">{topic}</span>
+                                  <MessageCircle className="w-4 h-4 text-monastery-gold" />
+                                  <span className="text-sm text-white">{topic}</span>
                                 </button>
                               ))}
                             </div>
@@ -549,11 +539,11 @@ const SmartAudioGuides: React.FC = () => {
                         </Card>
                       </>
                     ) : (
-                      <Card>
+                      <Card className="bg-black/70 border-none shadow-xl backdrop-blur-lg rounded-2xl">
                         <CardContent className="p-8 text-center">
-                          <Headphones className="w-12 h-12 mx-auto text-slate-400 mb-4" />
-                          <h3 className="text-lg font-medium text-slate-700 mb-2">Select Content</h3>
-                          <p className="text-slate-500">Choose a segment to start your AI-guided experience</p>
+                          <Headphones className="w-12 h-12 mx-auto text-monastery-gold mb-4" />
+                          <h3 className="text-lg font-semibold text-monastery-gold mb-2">Select Content</h3>
+                          <p className="text-white/80">Choose a segment to start your AI-guided experience</p>
                         </CardContent>
                       </Card>
                     )}

@@ -21,10 +21,10 @@ const HeroSection: React.FC = () => {
 
       {/* Hero Content */}
       <div className="relative z-10 flex flex-col items-start justify-center max-w-2xl px-8 py-16">
-        <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-4 leading-tight drop-shadow">
+        <h1 className="text-4xl md:text-6xl font-extrabold text-monastery-gold mb-4 leading-tight drop-shadow">
           UNVEIL THE <br/> MYSTICAL BEAUTY AND <br/>TIMELESS SOUL OF SIKKIM<br/>
         </h1>
-        <p className="text-lg md:text-xl text-white/80 mb-8 max-w-xl">
+        <p className="text-lg md:text-xl text-white mb-8 max-w-xl">
           Embark on a spiritual journey through ancient monasteries, experience sacred traditions, and connect with the timeless wisdom of the Himalayas.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 mb-8">

@@ -44,10 +44,10 @@ const MonasteryCard: React.FC<MonasteryCardProps> = ({
       </div>
 
       <CardHeader className="pb-3">
-        <h3 className="text-xl font-bold text-white mb-2 drop-shadow">
+        <h3 className="text-xl font-bold text-monastery-gold mb-2 drop-shadow">
           {monastery.name}
         </h3>
-        <p className="text-gray-300 text-sm leading-relaxed">
+        <p className="text-white text-sm leading-relaxed">
           {monastery.description}
         </p>
       </CardHeader>
@@ -112,10 +112,10 @@ const MonasteryShowcase: React.FC = () => {
   <section className="py-16 bg-gradient-to-b from-black via-gray-900 to-black">
       <div className="container mx-auto px-4">
         <div className="text-left mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow">
+          <h2 className="text-4xl md:text-5xl font-bold text-monastery-gold mb-4 drop-shadow">
             Sacred Monasteries
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl">
+          <p className="text-xl text-white max-w-3xl">
             Explore centuries-old monasteries, each with its unique history, architecture, 
             and spiritual significance in the heart of the Himalayas.
           </p>

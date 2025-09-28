@@ -55,7 +55,7 @@ const VirtualTours: React.FC = () => {
                 </div>
               </div>
               <div className="pb-2 pl-6">
-                <div className="text-xl text-white drop-shadow">{tour.name}</div>
+                <div className="text-xl pt-1 text-monastery-gold drop-shadow">{tour.name}</div>
                 <p className="text-gray-300">{tour.description}</p>
               </div>
               <div className="flex flex-col flex-1 justify-between pl-6 pr-6">
