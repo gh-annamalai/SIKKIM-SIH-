@@ -130,10 +130,7 @@ const ExperiencesHub: React.FC = () => {
                   <h1 className="text-xl font-bold text-monastery-gold drop-shadow">{getSelectedExperienceData()?.title}</h1>
                 </div>
               </div>
-              <Badge className="bg-green-900/60 text-green-300 px-4 py-1 rounded-full font-semibold flex items-center gap-2">
-                <Star className="w-3 h-3 mr-1" />
-                {getSelectedExperienceData()?.stats.rating}
-              </Badge>
+              
             </div>
           </div>
         </div>
@@ -148,7 +145,7 @@ const ExperiencesHub: React.FC = () => {
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-16">
-          <h1 className="text-5xl font-bold text-white mb-6">
+          <h1 className="text-5xl font-bold text-monastery-gold mb-6">
             Immersive Cultural Experiences
           </h1>
           <p className="text-xl text-white max-w-4xl mx-auto mb-8">
@@ -174,10 +171,10 @@ const ExperiencesHub: React.FC = () => {
                 </div>
               </div>
               <CardHeader className="pb-3">
-                <h3 className="text-xl font-bold text-white mb-2 drop-shadow">
+                <h3 className="text-xl font-bold text-monastery-gold mb-2 drop-shadow">
                   {experience.title}
                 </h3>
-                <p className="text-gray-300 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   {experience.description}
                 </p>
               </CardHeader>
@@ -225,8 +222,8 @@ const ExperiencesHub: React.FC = () => {
         {/* Technology Showcase */}
         <Card className="mb-16 overflow-hidden monastery-card bg-black/60 backdrop-blur-lg border-none shadow-2xl rounded-2xl">
           <CardHeader className="text-center pb-8">
-            <CardTitle className="text-3xl mb-4 text-white">Powered by Innovation</CardTitle>
-            <p className="text-slate-200 max-w-2xl mx-auto">
+            <CardTitle className="text-3xl mb-4 text-monastery-gold">Powered by Innovation</CardTitle>
+            <p className="text-white max-w-2xl mx-auto">
               Our experiences combine cutting-edge technology with authentic cultural knowledge 
               to create unprecedented access to Himalayan heritage
             </p>
@@ -237,8 +234,8 @@ const ExperiencesHub: React.FC = () => {
                 <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-purple-100 to-purple-200 flex items-center justify-center group-hover:scale-110 transition-transform">
                   <Camera className="w-8 h-8 text-purple-400" />
                 </div>
-                <h4 className="font-semibold text-lg mb-2 text-white">360° Technology</h4>
-                <p className="text-slate-300 text-sm">
+                <h4 className="font-semibold text-lg mb-2 text-monastery-gold">360° Technology</h4>
+                <p className="text-white text-sm">
                   State-of-the-art virtual reality captures every detail of sacred spaces
                 </p>
               </div>
@@ -246,8 +243,8 @@ const ExperiencesHub: React.FC = () => {
                 <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center group-hover:scale-110 transition-transform">
                   <Mic className="w-8 h-8 text-blue-400" />
                 </div>
-                <h4 className="font-semibold text-lg mb-2 text-white">Expert Narration</h4>
-                <p className="text-slate-300 text-sm">
+                <h4 className="font-semibold text-lg mb-2 text-monastery-gold">Expert Narration</h4>
+                <p className="text-white text-sm">
                   Authentic voices of monks, scholars, and cultural experts bring timeless wisdom and lived traditions to life.
                 </p>
               </div>
@@ -255,8 +252,8 @@ const ExperiencesHub: React.FC = () => {
                 <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center group-hover:scale-110 transition-transform">
                   <Brain className="w-8 h-8 text-green-400" />
                 </div>
-                <h4 className="font-semibold text-lg mb-2 text-white">AI Intelligence</h4>
-                <p className="text-slate-300 text-sm">
+                <h4 className="font-semibold text-lg mb-2 text-monastery-gold">AI Intelligence</h4>
+                <p className="text-white text-sm">
                   Smart algorithms adapt content to your interests and knowledge level
                 </p>
               </div>
@@ -268,10 +265,10 @@ const ExperiencesHub: React.FC = () => {
         <div className="text-center">
           <Card className="max-w-2xl mx-auto monastery-card bg-black/60 backdrop-blur-lg border-none shadow-2xl rounded-2xl">
             <CardContent className="p-8">
-              <h3 className="text-2xl font-bold text-white mb-4">
+              <h3 className="text-2xl font-bold text-monastery-gold mb-4">
                 Begin Your Spiritual Journey
               </h3>
-              <p className="text-slate-300 mb-6">
+              <p className="text-white mb-6">
                 Choose your preferred experience type above and start exploring the sacred 
                 monasteries of Sikkim with unprecedented depth and authenticity.
               </p>

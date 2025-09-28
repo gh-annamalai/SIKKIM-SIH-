@@ -69,7 +69,7 @@ const TourismServicesHub: React.FC = () => {
         phone: '+91-3592-251345',
         email: 'stay@rumtekguesthouse.org'
       },
-      features: ['Spiritual Atmosphere', 'Early Morning Prayers', 'Vegetarian Meals', 'Quiet Environment'],
+      features: ['Spiritual Atmosphere', 'Early Morning Prayers', 'Vegetarian Meals', 'Quiet Environment','Sacred Ambience'],
       cancellation: 'Flexible cancellation policy'
     },
     {
@@ -223,52 +223,40 @@ const TourismServicesHub: React.FC = () => {
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-8">
-          <h2 className="text-4xl font-bold text-slate-800 mb-4 flex items-center justify-center gap-3">
+          <h2 className="text-4xl font-bold text-monastery-gold mb-4 flex items-center justify-center gap-3">
             <Hotel className="w-10 h-10 text-blue-600" />
             Tourism Services Hub
           </h2>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+          <p className="text-xl text-white max-w-3xl mx-auto">
             Complete travel solutions for your monastery visit including accommodation, 
             guided tours, travel packages, and local expert guides.
           </p>
         </div>
 
         <Tabs value={selectedService} onValueChange={setSelectedService} className="w-full">
-          <TabsList className="grid w-full grid-cols-4 mb-8 max-w-2xl mx-auto">
-            <TabsTrigger value="accommodation">
-              <Hotel className="w-4 h-4 mr-1" />
-              Stay
-            </TabsTrigger>
-            <TabsTrigger value="packages">
-              <Calendar className="w-4 h-4 mr-1" />
-              Packages
-            </TabsTrigger>
-            <TabsTrigger value="guides">
-              <Users className="w-4 h-4 mr-1" />
-              Guides
-            </TabsTrigger>
-            <TabsTrigger value="services">
-              <Car className="w-4 h-4 mr-1" />
-              Services
-            </TabsTrigger>
+          <TabsList className="grid w-full grid-cols-4 mb-8 max-w-3xl mx-auto bg-black/70 border border-monastery-gold/40 rounded-xl p-1">
+            <TabsTrigger value="accommodation" className="text-monastery-gold font-semibold bg-black/40 rounded-xl data-[state=active]:bg-monastery-gold data-[state=active]:text-black transition-all">Stay</TabsTrigger>
+            <TabsTrigger value="packages" className="text-monastery-gold font-semibold bg-black/40 rounded-xl data-[state=active]:bg-monastery-gold data-[state=active]:text-black transition-all">Packages</TabsTrigger>
+            <TabsTrigger value="guides" className="text-monastery-gold font-semibold bg-black/40 rounded-xl data-[state=active]:bg-monastery-gold data-[state=active]:text-black transition-all">Guides</TabsTrigger>
+            <TabsTrigger value="services" className="text-monastery-gold font-semibold bg-black/40 rounded-xl data-[state=active]:bg-monastery-gold data-[state=active]:text-black transition-all">Services</TabsTrigger>
           </TabsList>
 
           <TabsContent value="accommodation">
             {/* Search and Filter */}
             <div className="mb-6 flex flex-col sm:flex-row gap-4">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-monastery-gold" />
                 <Input
                   placeholder="Search accommodations by name or location..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
+                  className="pl-12 bg-black/40 text-monastery-gold border border-monastery-gold rounded-xl w-full py-4 text-base placeholder:text-monastery-gold"
                 />
               </div>
               <select 
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="px-3 py-2 border border-monastery-gold bg-black/40 text-monastery-gold rounded-xl focus:outline-none focus:ring-2 focus:ring-monastery-gold"
               >
                 <option value="all">All Categories</option>
                 <option value="budget">Budget</option>
@@ -279,90 +267,89 @@ const TourismServicesHub: React.FC = () => {
 
             <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-6">
               {filteredAccommodations.map((accommodation) => (
-                <Card key={accommodation.id} className="hover:shadow-lg transition-shadow">
+                <Card key={accommodation.id} className="bg-black/60 rounded-2xl text-monastery-gold hover:shadow-[0_0_16px_4px_rgba(255,221,51,0.25)] hover:scale-[1.03] transition-all duration-200 flex flex-col min-h-[500px]" style={{border: 'none'}}>
                   <div className="relative">
                     <img 
                       src={accommodation.image} 
                       alt={accommodation.name}
-                      className="w-full h-48 object-cover rounded-t-lg"
+                      className="w-full h-48 object-cover rounded-t-xl "
                     />
-                    <Badge className="absolute top-2 right-2 bg-white text-slate-700">
+                    <Badge className="absolute top-2 right-2 bg-monastery-gold text-black font-semibold shadow-md">
                       {accommodation.type}
                     </Badge>
-                    <Button size="sm" className="absolute top-2 left-2 bg-white/80 hover:bg-white text-slate-700">
+                    <Button size="sm" className="absolute top-2 left-2 bg-black/80 border border-monastery-gold text-monastery-gold hover:bg-monastery-gold hover:text-black rounded-full shadow-md">
                       <Heart className="w-4 h-4" />
                     </Button>
                   </div>
                   <CardHeader>
                     <div className="flex justify-between items-start">
                       <div>
-                        <CardTitle className="text-lg">{accommodation.name}</CardTitle>
-                        <div className="flex items-center gap-2 text-sm text-slate-600 mt-1">
-                          <MapPin className="w-4 h-4" />
+                        <CardTitle className="text-lg text-monastery-gold font-bold">{accommodation.name}</CardTitle>
+                        <div className="flex items-center gap-2 text-sm text-white mt-1">
+                          <MapPin className="w-4 h-4 text-monastery-gold" />
                           {accommodation.location}
                         </div>
                       </div>
                       <div className="text-right">
                         <div className="flex items-center gap-1">
-                          <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                          <Star className="w-4 h-4 text-monastery-gold fill-monastery-gold" />
                           <span className="font-medium">{accommodation.rating}</span>
                         </div>
-                        <div className="text-2xl font-bold text-blue-600">{accommodation.price}</div>
-                        <div className="text-xs text-slate-500">per night</div>
+                        <div className="text-2xl font-bold text-monastery-gold">{accommodation.price}</div>
+                        <div className="text-xs text-white">per night</div>
                       </div>
                     </div>
                   </CardHeader>
-                  <CardContent className="space-y-4">
-                    <p className="text-sm text-slate-600">{accommodation.description}</p>
-                    
-                    <div className="flex items-center gap-2 text-sm">
-                      <MapPin className="w-4 h-4 text-green-600" />
+                  <CardContent className="space-y-4 flex-1 flex flex-col">
+                    <p className="text-sm text-white">{accommodation.description}</p>
+                    <div className="flex items-center gap-2 text-sm text-white">
+                      <MapPin className="w-4 h-4 text-monastery-gold" />
                       <span>{accommodation.distance}</span>
                     </div>
-
                     {/* Amenities */}
                     <div>
-                      <h4 className="font-medium mb-2 text-sm">Amenities</h4>
+                      <h4 className="font-medium mb-2 text-sm text-monastery-gold">Amenities</h4>
                       <div className="flex flex-wrap gap-1">
                         {accommodation.amenities.slice(0, 4).map((amenity, index) => (
-                          <Badge key={index} variant="outline" className="text-xs">
+                          <Badge key={index} variant="outline" className="text-xs border-white text-white bg-transparent">
                             {amenity}
                           </Badge>
                         ))}
                         {accommodation.amenities.length > 4 && (
-                          <Badge variant="outline" className="text-xs">
+                          <Badge variant="outline" className="text-xs border-white text-white bg-black/80">
                             +{accommodation.amenities.length - 4} more
                           </Badge>
                         )}
                       </div>
                     </div>
-
                     {/* Features */}
                     <div>
-                      <h4 className="font-medium mb-2 text-sm">Special Features</h4>
+                      <h4 className="font-medium mb-2 text-sm text-monastery-gold">Special Features</h4>
                       <div className="flex flex-wrap gap-1">
                         {accommodation.features.slice(0, 3).map((feature, index) => (
-                          <Badge key={index} className="bg-blue-50 text-blue-700 text-xs">
+                          <Badge key={index} className="bg-transparent text-white text-xs border-white">
                             {feature}
                           </Badge>
                         ))}
                       </div>
                     </div>
-
-                    {/* Contact & Booking */}
-                    <div className="flex gap-2 pt-2 border-t">
-                      <Button className="flex-1" size="sm">
-                        <Phone className="w-4 h-4 mr-2" />
-                        Contact
-                      </Button>
-                      <Button variant="outline" className="flex-1" size="sm">
-                        <Calendar className="w-4 h-4 mr-2" />
-                        Book Now
-                      </Button>
-                    </div>
-
-                    <div className="text-xs text-green-600 text-center">
-                      {accommodation.cancellation}
+                    <div className="flex flex-col flex-1 justify-between">
+                      <div>
+                        {/* ...existing content above buttons... */}
+                      </div>
+                      <div className="mt-auto">
+                        {/* Contact & Booking */}
+                        <div className="flex gap-2 pt-2 border-t border-monastery-gold/40">
+                          <Button className="flex-1 bg-monastery-gold text-black font-semibold rounded-xl border border-monastery-gold hover:bg-monastery-gold hover:text-black hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] transition-all" size="sm">
+                            <Phone className="w-4 h-4 mr-2" />
+                            Contact
+                          </Button>
+                          <Button variant="outline" className="flex-1 bg-transparent border border-monastery-gold text-white rounded-xl hover:bg-monastery-gold hover: transition-all" size="sm">
+                            <Calendar className="w-4 h-4 mr-2" />
+                            Book Now
+                          </Button>
+                        </div>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
@@ -373,43 +360,40 @@ const TourismServicesHub: React.FC = () => {
           <TabsContent value="packages">
             <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-6">
               {travelPackages.map((pkg) => (
-                <Card key={pkg.id} className="hover:shadow-lg transition-shadow">
+                <Card key={pkg.id} className="bg-black/60 border-transparent hover:shadow-[0_0_16px_4px_rgba(255,221,51,0.25)] hover:scale-[1.03] transition-all duration-200 flex flex-col h-full">
                   <CardHeader>
                     <div className="flex justify-between items-start">
                       <div>
-                        <CardTitle className="text-lg">{pkg.title}</CardTitle>
-                        <div className="flex items-center gap-2 text-sm text-slate-600 mt-1">
-                          <Clock className="w-4 h-4" />
+                        <CardTitle className="text-lg text-monastery-gold">{pkg.title}</CardTitle>
+                        <div className="flex items-center gap-2 text-sm text-white mt-1">
+                          <Clock className="w-4 h-4 text-monastery-gold" />
                           {pkg.duration}
                         </div>
                       </div>
                       <div className="text-right">
                         <div className="flex items-center gap-1">
-                          <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-                          <span className="font-medium">{pkg.rating}</span>
+                          <Star className="w-4 h-4 text-monastery-gold fill-monastery-gold" />
+                          <span className="font-medium text-monastery-gold">{pkg.rating}</span>
                         </div>
-                        <div className="text-2xl font-bold text-green-600">{pkg.price}</div>
-                        <div className="text-xs text-slate-500">per person</div>
+                        <div className="text-2xl font-bold text-monastery-gold">{pkg.price}</div>
+                        <div className="text-xs text-white">per person</div>
                       </div>
                     </div>
                   </CardHeader>
-                  <CardContent className="space-y-4">
+                  <CardContent className="space-y-4 flex-1 flex flex-col">
                     <div className="flex items-center justify-between text-sm">
-                      <div className="flex items-center gap-2">
-                        <Users className="w-4 h-4 text-blue-600" />
+                      <div className="flex items-center gap-2 text-white">
+                        <Users className="w-4 h-4 text-monastery-gold" />
                         <span>{pkg.groupSize}</span>
                       </div>
-                      <Badge variant={pkg.difficulty === 'Easy' ? 'default' : pkg.difficulty === 'Moderate' ? 'secondary' : 'destructive'}>
-                        {pkg.difficulty}
-                      </Badge>
                     </div>
 
                     {/* Highlights */}
                     <div>
-                      <h4 className="font-medium mb-2 text-sm">Highlights</h4>
-                      <div className="flex flex-wrap gap-1">
+                      <h4 className="font-medium mb-2 text-sm text-monastery-gold">Highlights</h4>
+                      <div className="flex flex-wrap gap-1 ">
                         {pkg.highlights.map((highlight, index) => (
-                          <Badge key={index} variant="outline" className="text-xs">
+                          <Badge key={index} variant="outline" className="text-xs text-white">
                             {highlight}
                           </Badge>
                         ))}
@@ -418,28 +402,25 @@ const TourismServicesHub: React.FC = () => {
 
                     {/* Inclusions */}
                     <div>
-                      <h4 className="font-medium mb-2 text-sm">Package Includes</h4>
+                      <h4 className="font-medium mb-2 text-sm text-monastery-gold">Package Includes</h4>
                       <div className="grid grid-cols-2 gap-1 text-xs">
                         {pkg.inclusions.map((inclusion, index) => (
-                          <div key={index} className="flex items-center gap-1">
-                            <ShieldCheck className="w-3 h-3 text-green-600" />
+                          <div key={index} className="flex items-center gap-1 text">
+                            <ShieldCheck className="w-3 h-3 text-monastery-gold" />
                             <span>{inclusion}</span>
                           </div>
                         ))}
                       </div>
                     </div>
-
-                    <div className="text-xs text-slate-600">
-                      <strong>Best Time:</strong> {pkg.bestTime}
-                    </div>
-
-                    <div className="flex gap-2 pt-2 border-t">
-                      <Button className="flex-1" size="sm">
-                        View Details
-                      </Button>
-                      <Button variant="outline" size="sm">
-                        <Share className="w-4 h-4" />
-                      </Button>
+                    <div className="mt-auto">
+                      <div className="flex gap-2 pt-2 border-transparent">
+                        <Button className="flex-1 bg-monastery-gold text-black font-semibold rounded-xl border border-monastery-gold hover:bg-monastery-gold hover:text-black hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] transition-all" size="sm">
+                          View Details
+                        </Button>
+                        <Button variant="outline" className="bg-transparent border border-monastery-gold text-white rounded-xl hover:bg-transparent hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] transition-all" size="sm">
+                          <Share className="w-4 h-4" />
+                        </Button>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
@@ -450,7 +431,7 @@ const TourismServicesHub: React.FC = () => {
           <TabsContent value="guides">
             <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-6">
               {localGuides.map((guide) => (
-                <Card key={guide.id} className="hover:shadow-lg transition-shadow">
+                <Card key={guide.id} className="border-transparent bg-black/60 hover:shadow-[0_0_16px_4px_rgba(255,221,51,0.25)] hover:scale-[1.03] transition-all duration-200">
                   <CardHeader>
                     <div className="flex items-start gap-4">
                       <img 
@@ -459,34 +440,33 @@ const TourismServicesHub: React.FC = () => {
                         className="w-16 h-16 rounded-full object-cover"
                       />
                       <div className="flex-1">
-                        <CardTitle className="text-lg">{guide.name}</CardTitle>
-                        <p className="text-sm text-slate-600">{guide.specialization}</p>
+                        <CardTitle className="text-lg text-monastery-gold">{guide.name}</CardTitle>
+                        <p className="text-sm text-white">{guide.specialization}</p>
                         <div className="flex items-center gap-2 mt-1">
                           <div className="flex items-center gap-1">
-                            <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-                            <span className="font-medium">{guide.rating}</span>
-                            <span className="text-xs text-slate-500">({guide.reviews} reviews)</span>
+                            <Star className="w-4 h-4 text-monastery-gold fill-monastery-gold" />
+                            <span className="font-medium text-monastery-gold">{guide.rating}</span>
                           </div>
                         </div>
                       </div>
                       <div className="text-right">
-                        <div className="text-xl font-bold text-green-600">{guide.rate}</div>
+                        <div className="text-xl font-bold text-monastery-gold">{guide.rate}</div>
                       </div>
                     </div>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    <p className="text-sm text-slate-600">{guide.description}</p>
+                    <p className="text-sm text-white">{guide.description}</p>
                     
-                    <div className="text-sm">
-                      <strong>Experience:</strong> {guide.experience}
+                    <div className="text-sm text-white">
+                      <strong className='text-monastery-gold'>Experience:</strong> {guide.experience}
                     </div>
 
                     {/* Languages */}
                     <div>
-                      <h4 className="font-medium mb-2 text-sm">Languages</h4>
-                      <div className="flex flex-wrap gap-1">
+                      <h4 className="font-medium mb-2 text-sm text-monastery-gold">Languages</h4>
+                      <div className="flex flex-wrap gap-1 border-white">
                         {guide.languages.map((language, index) => (
-                          <Badge key={index} variant="outline" className="text-xs">
+                          <Badge key={index} variant="outline" className="text-xs text-white border-white">
                             {language}
                           </Badge>
                         ))}
@@ -495,10 +475,10 @@ const TourismServicesHub: React.FC = () => {
 
                     {/* Expertise */}
                     <div>
-                      <h4 className="font-medium mb-2 text-sm">Expertise</h4>
+                      <h4 className="font-medium mb-2 text-sm text-monastery-gold">Expertise</h4>
                       <div className="flex flex-wrap gap-1">
                         {guide.expertise.slice(0, 3).map((skill, index) => (
-                          <Badge key={index} className="bg-blue-50 text-blue-700 text-xs">
+                          <Badge key={index} className="bg-transparent border-white text-white text-xs">
                             {skill}
                           </Badge>
                         ))}
@@ -507,27 +487,23 @@ const TourismServicesHub: React.FC = () => {
 
                     {/* Certifications */}
                     <div>
-                      <h4 className="font-medium mb-2 text-sm">Certifications</h4>
+                      <h4 className="font-medium mb-2 text-sm text-monastery-gold">Certifications</h4>
                       <div className="space-y-1">
                         {guide.certifications.map((cert, index) => (
-                          <div key={index} className="flex items-center gap-2 text-xs">
-                            <ShieldCheck className="w-3 h-3 text-green-600" />
+                          <div key={index} className="flex items-center gap-2 text-white text-xs">
+                            <ShieldCheck className="w-3 h-3 text-monastery-gold" />
                             <span>{cert}</span>
                           </div>
                         ))}
                       </div>
                     </div>
 
-                    <div className="text-xs text-slate-600">
-                      <strong>Availability:</strong> {guide.availability}
-                    </div>
-
                     <div className="flex gap-2 pt-2 border-t">
-                      <Button className="flex-1" size="sm">
+                      <Button className="flex-1 bg-monastery-gold text-black font-semibold rounded-xl border border-monastery-gold hover:bg-monastery-gold hover:text-black hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] transition-all" size="sm">
                         <Phone className="w-4 h-4 mr-2" />
                         Contact
                       </Button>
-                      <Button variant="outline" className="flex-1" size="sm">
+                      <Button variant="outline" className="flex-1 bg-transparent border border-monastery-gold text-white rounded-xl hover:bg-transparent hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] transition-all" size="sm">
                         <Mail className="w-4 h-4 mr-2" />
                         Message
                       </Button>
@@ -541,83 +517,83 @@ const TourismServicesHub: React.FC = () => {
           <TabsContent value="services">
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {/* Transportation Services */}
-              <Card>
+              <Card className = "border-transparent bg-black/60 hover:shadow-[0_0_16px_4px_rgba(255,221,51,0.25)] hover:scale-[1.03] transition-all duration-200">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Car className="w-5 h-5 text-blue-600" />
+                  <CardTitle className="flex items-center gap-2 text-white">
+                    <Car className="w-5 h-5 text-monastery-gold" />
                     Transportation
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    <div className="p-3 bg-blue-50 rounded-lg">
-                      <div className="font-medium">Airport Pickup</div>
-                      <div className="text-sm text-slate-600">₹1,500 - ₹2,500</div>
+                    <div className="p-3 bg-black/60 hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] rounded-lg">
+                      <div className="font-medium text-monastery-gold">Airport Pickup</div>
+                      <div className="text-sm text-white">₹1,500 - ₹2,500</div>
                     </div>
-                    <div className="p-3 bg-green-50 rounded-lg">
-                      <div className="font-medium">Monastery Tours</div>
-                      <div className="text-sm text-slate-600">₹2,000 - ₹4,000/day</div>
+                    <div className="p-3 bg-black/60 hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] rounded-lg">
+                      <div className="font-medium text-monastery-gold">Monastery Tours</div>
+                      <div className="text-sm text-white">₹2,000 - ₹4,000/day</div>
                     </div>
-                    <div className="p-3 bg-purple-50 rounded-lg">
-                      <div className="font-medium">Car Rental</div>
-                      <div className="text-sm text-slate-600">₹3,500 - ₹6,000/day</div>
+                    <div className="p-3 bg-black/60 hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] rounded-lg">
+                      <div className="font-medium text-monastery-gold">Car Rental</div>
+                      <div className="text-sm text-white">₹3,500 - ₹6,000/day</div>
                     </div>
                   </div>
-                  <Button className="w-full mt-4" size="sm">Book Transport</Button>
+                  <Button className="w-full mt-4 bg-monastery-gold text-black font-semibold rounded-xl border border-monastery-gold hover:bg-monastery-gold hover:text-black hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] transition-all" size="sm">Book Transport</Button>
                 </CardContent>
               </Card>
 
               {/* Food Services */}
-              <Card>
+              <Card className='border-transparent bg-black/60 hover:shadow-[0_0_16px_4px_rgba(255,221,51,0.25)] hover:scale-[1.03] transition-all duration-200'>
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Utensils className="w-5 h-5 text-green-600" />
+                  <CardTitle className="flex items-center gap-2 text-white">
+                    <Utensils className="w-5 h-5 text-monastery-gold" />
                     Food Services
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    <div className="p-3 bg-green-50 rounded-lg">
-                      <div className="font-medium">Traditional Meals</div>
-                      <div className="text-sm text-slate-600">Authentic Tibetan cuisine</div>
+                    <div className="p-3 bg-black/60 hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] rounded-lg">
+                      <div className="font-medium text-monastery-gold">Traditional Meals</div>
+                      <div className="text-sm text-white">Authentic Tibetan cuisine</div>
                     </div>
-                    <div className="p-3 bg-orange-50 rounded-lg">
-                      <div className="font-medium">Monastery Dining</div>
-                      <div className="text-sm text-slate-600">Vegetarian monastery meals</div>
+                    <div className="p-3 bg-black/60 hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] rounded-lg">
+                      <div className="font-medium text-monastery-gold">Monastery Dining</div>
+                      <div className="text-sm text-white">Vegetarian monastery meals</div>
                     </div>
-                    <div className="p-3 bg-red-50 rounded-lg">
-                      <div className="font-medium">Cooking Classes</div>
-                      <div className="text-sm text-slate-600">Learn traditional recipes</div>
+                    <div className="p-3 bg-black/60 hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] rounded-lg">
+                      <div className="font-medium text-monastery-gold">Cooking Classes</div>
+                      <div className="text-sm text-white">Learn traditional recipes</div>
                     </div>
                   </div>
-                  <Button className="w-full mt-4" size="sm">Explore Dining</Button>
+                  <Button className="w-full mt-4 bg-monastery-gold text-black font-semibold rounded-xl border border-monastery-gold hover:bg-monastery-gold hover:text-black hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] transition-all" size="sm">Explore Dining</Button>
                 </CardContent>
               </Card>
 
               {/* Special Services */}
-              <Card>
+              <Card className = "border-transparent bg-black/60 hover:shadow-[0_0_16px_4px_rgba(255,221,51,0.25)] hover:scale-[1.03] transition-all duration-200">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Mountain className="w-5 h-5 text-purple-600" />
+                  <CardTitle className="flex items-center gap-2 text-white">
+                    <Mountain className="w-5 h-5 text-monastery-gold" />
                     Special Services
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    <div className="p-3 bg-purple-50 rounded-lg">
-                      <div className="font-medium">Photography Tours</div>
-                      <div className="text-sm text-slate-600">Professional photo guidance</div>
+                    <div className="p-3 bg-black/60 hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] rounded-lg">
+                      <div className="font-medium text-monastery-gold">Photography Tours</div>
+                      <div className="text-sm text-white">Professional photo guidance</div>
                     </div>
-                    <div className="p-3 bg-blue-50 rounded-lg">
-                      <div className="font-medium">Spiritual Retreats</div>
-                      <div className="text-sm text-slate-600">Meditation and wellness</div>
+                    <div className="p-3 bg-black/60 hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] rounded-lg">
+                      <div className="font-medium text-monastery-gold">Spiritual Retreats</div>
+                      <div className="text-sm text-white">Meditation and wellness</div>
                     </div>
-                    <div className="p-3 bg-yellow-50 rounded-lg">
-                      <div className="font-medium">Cultural Workshops</div>
-                      <div className="text-sm text-slate-600">Art, craft, and traditions</div>
+                    <div className="p-3 bg-black/60 hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] rounded-lg">
+                      <div className="font-medium text-monastery-gold">Cultural Workshops</div>
+                      <div className="text-sm text-white">Art, craft, and traditions</div>
                     </div>
                   </div>
-                  <Button className="w-full mt-4" size="sm">Book Experience</Button>
+                  <Button className="w-full mt-4 bg-monastery-gold text-black font-semibold rounded-xl border border-monastery-gold hover:bg-monastery-gold hover:text-black hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] transition-all" size="sm">Book Experience</Button>
                 </CardContent>
               </Card>
             </div>

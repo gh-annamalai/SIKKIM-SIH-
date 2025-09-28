@@ -40,12 +40,40 @@ import {
   Send
 } from 'lucide-react';
 
+type Post = {
+  id: number;
+  type: string;
+  title: string;
+  description: string;
+  author: {
+    name: string;
+    avatar: string;
+    username: string;
+    level: string;
+    verified: boolean;
+  };
+  media: string;
+  location: string;
+  timestamp: string;
+  likes: number;
+  comments: number;
+  shares: number;
+  bookmarks: number;
+  views: number;
+  tags: string[];
+  isLiked: boolean;
+  isBookmarked: boolean;
+  category: string;
+  thumbnail?: string;
+  duration?: string;
+};
+
 const ContentSharing: React.FC = () => {
   const [activeTab, setActiveTab] = useState('all');
   const [viewMode, setViewMode] = useState('grid');
   const [searchTerm, setSearchTerm] = useState('');
   const [showUploadModal, setShowUploadModal] = useState(false);
-  const [selectedPost, setSelectedPost] = useState<any>(null);
+  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
   const contentTypes = [
     { id: 'all', name: 'All Content', icon: Grid, count: 1247 },
@@ -187,6 +215,16 @@ const ContentSharing: React.FC = () => {
     }
   ];
 
+  const filteredPosts = posts.filter(post => {
+    const term = searchTerm.toLowerCase();
+    return (
+      post.title.toLowerCase().includes(term) ||
+      post.description.toLowerCase().includes(term) ||
+      post.author.name.toLowerCase().includes(term) ||
+      post.tags.some(tag => tag.toLowerCase().includes(term))
+    );
+  });
+
   const getTypeIcon = (type: string) => {
     switch (type) {
       case 'photo': return Camera;
@@ -205,18 +243,18 @@ const ContentSharing: React.FC = () => {
   };
 
   return (
-    <div className="py-12 bg-gradient-to-b from-slate-50 to-white">
+    <div className="py-12 bg-gradient-to-b bg-black/60">
       <div className="container mx-auto px-4 max-w-7xl">
         {/* Header */}
         <div className="mb-8">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-slate-800 mb-2">Content Sharing</h1>
-              <p className="text-slate-600">Share your monastery experiences, photos, and spiritual journey with the community</p>
+              <h1 className="text-3xl font-bold text-monastery-gold mb-2">Content Sharing</h1>
+              <p className="text-white">Share your monastery experiences, photos, and spiritual journey with the community</p>
             </div>
             <Button 
               onClick={() => setShowUploadModal(true)}
-              className="bg-blue-600 hover:bg-blue-700"
+              className="bg-monastery-gold text-black font-semibold rounded-xl border border-monastery-gold hover:bg-monastery-gold hover:text-black hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] transition-all"
             >
               <Plus className="w-4 h-4 mr-2" />
               Share Content
@@ -285,14 +323,15 @@ const ContentSharing: React.FC = () => {
         </Card>
 
         {/* Content Grid/List */}
+        {/* Removed duplicate filteredPosts definition from JSX */}
         <div className={viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-6'}>
-          {posts.map((post) => {
+          {filteredPosts.map((post) => {
             const TypeIcon = getTypeIcon(post.type);
             
             return (
               <Card 
                 key={post.id} 
-                className="hover:shadow-lg transition-shadow cursor-pointer group"
+                className="bg-black/60 border-transparent hover:scale-105 hover:shadow-[0_8px_32px_0_rgba(255,221,51,0.35)] transition-all duration-200 cursor-pointer group"
                 onClick={() => setSelectedPost(post)}
               >
                 {/* Media Header */}
@@ -302,7 +341,7 @@ const ContentSharing: React.FC = () => {
                       <img 
                         src={post.thumbnail} 
                         alt={post.title}
-                        className="w-full h-48 object-cover"
+                        className="w-full h-48 object-cover rounded-t-xl"
                       />
                       <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
                         <div className="w-16 h-16 bg-black/50 rounded-full flex items-center justify-center">
@@ -318,9 +357,9 @@ const ContentSharing: React.FC = () => {
                       <img 
                         src={post.coverImage} 
                         alt={post.title}
-                        className="w-full h-48 object-cover"
+                        className="w-full h-48 object-cover rounded-t-xl"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-t-xl" />
                       <div className="absolute bottom-4 left-4 text-white">
                         <div className="flex items-center gap-2 mb-2">
                           <FileText className="w-4 h-4" />
@@ -332,7 +371,7 @@ const ContentSharing: React.FC = () => {
                     <img 
                       src={post.media} 
                       alt={post.title}
-                      className="w-full h-48 object-cover"
+                      className="w-full h-48 object-cover rounded-t-xl"
                     />
                   )}
                   
@@ -360,21 +399,21 @@ const ContentSharing: React.FC = () => {
 
                 <CardContent className="p-4">
                   {/* Category */}
-                  <Badge variant="outline" className="mb-3 text-xs">
+                  <Badge variant="outline" className="mb-3 text-xs border-white text-white">
                     {post.category}
                   </Badge>
 
                   {/* Title and Description */}
-                  <h3 className="font-semibold text-slate-800 mb-2 line-clamp-2 group-hover:text-blue-600">
+                  <h3 className="font-semibold text-monastery-gold mb-2 line-clamp-2">
                     {post.title}
                   </h3>
                   
-                  <p className="text-slate-600 text-sm mb-3 line-clamp-2">
+                  <p className="text-white text-sm mb-3 line-clamp-2">
                     {post.description}
                   </p>
 
                   {/* Author Info */}
-                  <div className="flex items-center gap-3 mb-3">
+                  <div className="flex items-center gap-3 mb-3 text-white">
                     <Avatar className="w-8 h-8">
                       <AvatarImage src={post.author.avatar} alt={post.author.name} />
                       <AvatarFallback>{post.author.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
@@ -382,11 +421,7 @@ const ContentSharing: React.FC = () => {
                     <div className="flex-1">
                       <div className="flex items-center gap-1">
                         <span className="text-sm font-medium">{post.author.name}</span>
-                        {post.author.verified && (
-                          <Badge className="bg-blue-100 text-blue-800 text-xs px-1">
-                            ✓
-                          </Badge>
-                        )}
+                        
                       </div>
                       <div className="text-xs text-slate-500">
                         {post.author.level} • {post.timestamp}
@@ -396,7 +431,7 @@ const ContentSharing: React.FC = () => {
 
                   {/* Location */}
                   {post.location && (
-                    <div className="flex items-center gap-1 text-xs text-slate-500 mb-3">
+                    <div className="flex items-center gap-1 text-xs text-white mb-3">
                       <MapPin className="w-3 h-3" />
                       {post.location}
                     </div>

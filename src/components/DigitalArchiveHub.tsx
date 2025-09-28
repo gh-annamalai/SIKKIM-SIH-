@@ -150,35 +150,35 @@ const DigitalArchiveHub: React.FC = () => {
   };
 
   return (
-    <div className="py-12 bg-gradient-to-b from-slate-50 to-white">
+    <div className="py-12 bg-gradient-to-b from-black via-gray-900 to-black">
       <div className="container mx-auto px-4 max-w-7xl">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-slate-800 mb-2">Digital Archive & AI Hub</h1>
-          <p className="text-slate-600 max-w-2xl mx-auto">
+          <h1 className="text-3xl font-bold text-monastery-gold mb-2">Digital Archive & AI Hub</h1>
+          <p className="text-white max-w-2xl mx-auto">
             Advanced AI-powered tools for manuscript analysis, OCR text extraction, intelligent search, and personalized content discovery
           </p>
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-5 mb-8 max-w-4xl mx-auto">
-            <TabsTrigger value="overview">
+          <TabsList className="grid w-full grid-cols-5 mb-8 max-w-4xl mx-auto bg-black/60 border border-monastery-gold rounded-xl p-1">
+            <TabsTrigger value="overview" className="bg-black text-monastery-gold rounded-xl data-[state=active]:bg-monastery-gold data-[state=active]:text-black transition-all flex items-center gap-2">
               <Database className="w-4 h-4 mr-2" />
               Overview
             </TabsTrigger>
-            <TabsTrigger value="search">
+            <TabsTrigger value="search" className="bg-black text-monastery-gold rounded-xl data-[state=active]:bg-monastery-gold data-[state=active]:text-black transition-all flex items-center gap-2">
               <Search className="w-4 h-4 mr-2" />
               Smart Search
             </TabsTrigger>
-            <TabsTrigger value="ocr">
+            <TabsTrigger value="ocr" className="bg-black text-monastery-gold rounded-xl data-[state=active]:bg-monastery-gold data-[state=active]:text-black transition-all flex items-center gap-2">
               <Scan className="w-4 h-4 mr-2" />
               OCR Explorer
             </TabsTrigger>
-            <TabsTrigger value="ai">
+            <TabsTrigger value="ai" className="bg-black text-monastery-gold rounded-xl data-[state=active]:bg-monastery-gold data-[state=active]:text-black transition-all flex items-center gap-2">
               <Bot className="w-4 h-4 mr-2" />
               AI Assistant
             </TabsTrigger>
-            <TabsTrigger value="recommendations">
+            <TabsTrigger value="recommendations" className="bg-black text-monastery-gold rounded-xl data-[state=active]:bg-monastery-gold data-[state=active]:text-black transition-all flex items-center gap-2">
               <Target className="w-4 h-4 mr-2" />
               Recommendations
             </TabsTrigger>

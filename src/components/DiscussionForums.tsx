@@ -185,18 +185,18 @@ const DiscussionForums: React.FC = () => {
   };
 
   return (
-    <div className="py-12 bg-gradient-to-b from-slate-50 to-white">
+    <div className="py-12 bg-black/60">
       <div className="container mx-auto px-4 max-w-7xl">
         {/* Header */}
         <div className="mb-8">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-slate-800 mb-2">Discussion Forums</h1>
-              <p className="text-slate-600">Connect, learn, and share your spiritual journey with our community</p>
+              <h1 className="text-3xl font-bold text-monastery-gold mb-2">Discussion Forums</h1>
+              <p className="text-white">Connect, learn, and share your spiritual journey with our community</p>
             </div>
             <Button 
               onClick={() => setShowNewTopicForm(true)}
-              className="bg-blue-600 hover:bg-blue-700"
+              className="bg-monastery-gold text-black font-semibold rounded-xl border border-monastery-gold hover:bg-monastery-gold hover:text-black hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] transition-all"
             >
               <Plus className="w-4 h-4 mr-2" />
               New Discussion
@@ -300,7 +300,7 @@ const DiscussionForums: React.FC = () => {
             {/* Pinned Discussions */}
             {pinnedDiscussions.length > 0 && (
               <div className="mb-6">
-                <h2 className="text-lg font-semibold text-slate-800 mb-4 flex items-center gap-2">
+                <h2 className="text-lg font-semibold text-monastery-gold mb-4 flex items-center gap-2">
                   <Pin className="w-5 h-5 text-blue-600" />
                   Pinned Discussions
                 </h2>
@@ -308,7 +308,7 @@ const DiscussionForums: React.FC = () => {
                   {pinnedDiscussions.map((discussion) => {
                     const CategoryIcon = getCategoryIcon(discussion.category);
                     return (
-                      <Card key={discussion.id} className="border-l-4 border-l-blue-500">
+                      <Card key={discussion.id} className="border-l-4">
                         <CardContent className="pt-6">
                           <div className="flex items-start gap-4">
                             <Avatar className="w-10 h-10">

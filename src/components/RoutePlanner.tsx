@@ -133,16 +133,6 @@ const RoutePlanner: React.FC = () => {
       cons: ['Shared space', 'Fixed route', 'Wait for passengers'],
       suitableFor: 'Budget-conscious groups, Social travelers',
       bookingInfo: 'Book from taxi stands'
-    },
-    {
-      mode: 'flight',
-      name: 'Helicopter',
-      icon: Plane,
-      costPerKm: '₹150-200',
-      pros: ['Fastest option', 'Aerial views', 'Luxury experience', 'Weather permitting'],
-      cons: ['Very expensive', 'Weather dependent', 'Limited availability', 'Booking required'],
-      suitableFor: 'Luxury travelers, Time-sensitive',
-      bookingInfo: 'Advance booking required'
     }
   ];
 
@@ -170,31 +160,31 @@ const RoutePlanner: React.FC = () => {
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-8">
-          <h2 className="text-4xl font-bold text-slate-800 mb-4 flex items-center justify-center gap-3">
+          <h2 className="text-4xl font-bold text-monastery-gold mb-4 flex items-center justify-center gap-3">
             <Route className="w-10 h-10 text-green-600" />
             Smart Route Planner
           </h2>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+          <p className="text-xl text-white max-w-3xl mx-auto">
             Plan your perfect journey to the monasteries with optimized routes, 
             cost estimation, travel time calculation, and personalized recommendations.
           </p>
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-4 mb-8 max-w-2xl mx-auto">
-            <TabsTrigger value="planner">
+          <TabsList className="grid w-full grid-cols-4 mb-8 max-w-2xl mx-auto bg-black/70 border border-monastery-gold/40 rounded-xl p-1">
+            <TabsTrigger value="planner" className="text-monastery-gold font-semibold bg-black/40 rounded-xl data-[state=active]:bg-monastery-gold data-[state=active]:text-black transition-all">
               <Map className="w-4 h-4 mr-1" />
               Plan
             </TabsTrigger>
-            <TabsTrigger value="routes">
+            <TabsTrigger value="routes" className="text-monastery-gold font-semibold bg-black/40 rounded-xl data-[state=active]:bg-monastery-gold data-[state=active]:text-black transition-all">
               <Route className="w-4 h-4 mr-1" />
               Routes
             </TabsTrigger>
-            <TabsTrigger value="transport">
+            <TabsTrigger value="transport" className="text-monastery-gold font-semibold bg-black/40 rounded-xl data-[state=active]:bg-monastery-gold data-[state=active]:text-black transition-all">
               <Car className="w-4 h-4 mr-1" />
               Transport
             </TabsTrigger>
-            <TabsTrigger value="costs">
+            <TabsTrigger value="costs" className="text-monastery-gold font-semibold bg-black/40 rounded-xl data-[state=active]:bg-monastery-gold data-[state=active]:text-black transition-all">
               <Calculator className="w-4 h-4 mr-1" />
               Costs
             </TabsTrigger>
@@ -204,18 +194,18 @@ const RoutePlanner: React.FC = () => {
             <div className="grid lg:grid-cols-3 gap-8">
               {/* Planning Form */}
               <div className="lg:col-span-1">
-                <Card>
+                <Card className="bg-black/60 border-transparent rounded-xl">
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Compass className="w-5 h-5 text-blue-600" />
+                    <CardTitle className="flex items-center gap-2 text-monastery-gold">
+                      <Compass className="w-5 h-5 text-monastery-gold" />
                       Plan Your Journey
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     {/* Start Location */}
                     <div>
-                      <label className="block text-sm font-medium mb-2">From</label>
-                      <Input 
+                      <label className="block text-sm font-medium mb-2 text-monastery-gold">From</label>
+                      <Input className ="bg-black/60 border-monastery-gold text-white placeholder-gray-300 focus:ring-2 focus:ring-monastery-gold focus:border-monastery-gold rounded-md"
                         placeholder="Enter starting location"
                         value={startLocation}
                         onChange={(e) => setStartLocation(e.target.value)}
@@ -224,11 +214,11 @@ const RoutePlanner: React.FC = () => {
 
                     {/* End Location */}
                     <div>
-                      <label className="block text-sm font-medium mb-2">To</label>
+                      <label className="block text-sm font-medium mb-2 text-monastery-gold">To</label>
                       <select 
                         value={endLocation}
                         onChange={(e) => setEndLocation(e.target.value)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-3 py-2 bg-black/60 border border-monastery-gold rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                       >
                         <option value="Rumtek Monastery">Rumtek Monastery</option>
                         <option value="Pemayangtse Monastery">Pemayangtse Monastery</option>
@@ -238,11 +228,11 @@ const RoutePlanner: React.FC = () => {
 
                     {/* Transport Mode */}
                     <div>
-                      <label className="block text-sm font-medium mb-2">Transport Mode</label>
+                      <label className="block text-sm font-medium mb-2 text-monastery-gold">Transport Mode</label>
                       <select 
                         value={travelMode}
                         onChange={(e) => setTravelMode(e.target.value)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-3 py-2 bg-black/60 border border-monastery-gold rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                       >
                         <option value="car">Private Car</option>
                         <option value="bus">Public Bus</option>
@@ -253,8 +243,8 @@ const RoutePlanner: React.FC = () => {
 
                     {/* Number of Travelers */}
                     <div>
-                      <label className="block text-sm font-medium mb-2">Number of Travelers</label>
-                      <Input 
+                      <label className="block text-sm font-medium mb-2 text-monastery-gold">Number of Travelers</label>
+                      <Input className ="bg-black/60 border-monastery-gold text-white placeholder-white focus:ring-2 focus:ring-monastery-gold focus:border-monastery-gold rounded-md"
                         type="number"
                         min="1"
                         max="8"
@@ -265,11 +255,11 @@ const RoutePlanner: React.FC = () => {
 
                     {/* Travel Date */}
                     <div>
-                      <label className="block text-sm font-medium mb-2">Travel Date</label>
-                      <Input type="date" />
+                      <label className="block text-sm font-medium mb-2 text-monastery-gold">Travel Date</label>
+                      <Input type="date" className ="bg-black/60 border-monastery-gold text-white placeholder-white focus:ring-2 focus:ring-monastery-gold focus:border-monastery-gold rounded-md" />
                     </div>
 
-                    <Button className="w-full">
+                    <Button className="w-full bg-monastery-gold text-black font-semibold rounded-xl border border-monastery-gold hover:bg-monastery-gold hover:text-black hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] transition-all">
                       <Navigation className="w-4 h-4 mr-2" />
                       Find Best Route
                     </Button>
@@ -277,9 +267,9 @@ const RoutePlanner: React.FC = () => {
                 </Card>
 
                 {/* Weather Alert */}
-                <Card className="mt-4">
+                <Card className="mt-4 bg-black/60 border-transparent rounded-xl">
                   <CardContent className="pt-4">
-                    <div className={`flex items-center gap-2 p-3 rounded-lg ${
+                    <div className={`flex items-center gap-2 p-3 rounded-lg  ${
                       getWeatherAlert().type === 'success' ? 'bg-green-50 text-green-800' :
                       getWeatherAlert().type === 'warning' ? 'bg-yellow-50 text-yellow-800' :
                       'bg-blue-50 text-blue-800'
@@ -293,14 +283,13 @@ const RoutePlanner: React.FC = () => {
 
               {/* Route Summary */}
               <div className="lg:col-span-2">
-                <Card>
+                <Card className ="bg-black/60 border-transparent rounded-xl">
                   <CardHeader>
                     <CardTitle className="flex items-center justify-between">
-                      <span className="flex items-center gap-2">
+                      <span className="flex items-center gap-2 text-monastery-gold">
                         <Route className="w-5 h-5 text-green-600" />
                         Recommended Route
                       </span>
-                      <Badge variant="outline">{selectedRoute.difficulty}</Badge>
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-6">
@@ -330,7 +319,7 @@ const RoutePlanner: React.FC = () => {
 
                     {/* Route Path */}
                     <div>
-                      <h3 className="font-semibold mb-3">Route Path</h3>
+                      <h3 className="font-semibold mb-3 text-monastery-gold">Route Path</h3>
                       <div className="flex items-center gap-2 flex-wrap">
                         {selectedRoute.route.map((location, index) => (
                           <div key={index} className="flex items-center gap-2">
@@ -348,10 +337,10 @@ const RoutePlanner: React.FC = () => {
 
                     {/* Highlights */}
                     <div>
-                      <h3 className="font-semibold mb-3">Route Highlights</h3>
-                      <div className="flex flex-wrap gap-2">
+                      <h3 className="font-semibold mb-3 text-monastery-gold">Route Highlights</h3>
+                      <div className="flex flex-wrap gap-2 bg-transparent border-white text-white">
                         {selectedRoute.highlights.map((highlight, index) => (
-                          <Badge key={index} variant="outline" className="text-sm">
+                          <Badge key={index} variant="outline" className="text-sm text-white">
                             {highlight}
                           </Badge>
                         ))}
@@ -360,7 +349,7 @@ const RoutePlanner: React.FC = () => {
 
                     {/* Planned Stops */}
                     <div>
-                      <h3 className="font-semibold mb-3">Planned Stops</h3>
+                      <h3 className="font-semibold mb-3 text-monastery-gold">Planned Stops</h3>
                       <div className="space-y-2">
                         {selectedRoute.stops.map((stop, index) => (
                           <div key={index} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
@@ -381,7 +370,7 @@ const RoutePlanner: React.FC = () => {
                     {/* Warnings */}
                     {selectedRoute.warnings.length > 0 && (
                       <div>
-                        <h3 className="font-semibold mb-3 flex items-center gap-2">
+                        <h3 className="font-semibold mb-3 flex items-center gap-2 text-monastery-gold">
                           <AlertCircle className="w-4 h-4 text-orange-600" />
                           Important Notes
                         </h3>
@@ -404,16 +393,16 @@ const RoutePlanner: React.FC = () => {
           <TabsContent value="routes">
             <div className="space-y-6">
               {routeOptions.map((route) => (
-                <Card key={route.id} className={`${travelMode === route.transportMode ? 'ring-2 ring-blue-500' : ''}`}>
+                <Card key={route.id} className= "bg-black/60 border-transparent rounded-xl">
                   <CardHeader>
                     <div className="flex justify-between items-start">
                       <div>
-                        <CardTitle className="flex items-center gap-2">
+                        <CardTitle className="flex items-center gap-2 text-monastery-gold">
                           <Route className="w-5 h-5 text-green-600" />
                           {route.name}
                         </CardTitle>
-                        <div className="flex items-center gap-4 mt-2 text-sm text-slate-600">
-                          <span className="flex items-center gap-1">
+                        <div className="flex items-center gap-4 mt-2 text-sm text-white">
+                          <span className="flex items-center gap-1 text-white">
                             <Navigation className="w-4 h-4" />
                             {route.distance}
                           </span>
@@ -427,39 +416,33 @@ const RoutePlanner: React.FC = () => {
                           </span>
                         </div>
                       </div>
-                      <Badge variant={
-                        route.difficulty === 'Easy' ? 'default' : 
-                        route.difficulty === 'Moderate' ? 'secondary' : 'destructive'
-                      }>
-                        {route.difficulty}
-                      </Badge>
                     </div>
                   </CardHeader>
                   <CardContent>
                     <div className="grid md:grid-cols-2 gap-4">
                       <div>
-                        <h4 className="font-medium mb-2">Highlights</h4>
+                        <h4 className="font-medium mb-2 text-monastery-gold">Highlights</h4>
                         <div className="flex flex-wrap gap-1">
                           {route.highlights.map((highlight, index) => (
-                            <Badge key={index} variant="outline" className="text-xs">
+                            <Badge key={index} variant="outline" className="text-xs text-white border-white">
                               {highlight}
                             </Badge>
                           ))}
                         </div>
                       </div>
                       <div>
-                        <h4 className="font-medium mb-2">Road Condition</h4>
+                        <h4 className="font-medium mb-2 text-white">Road Condition</h4>
                         <div className="flex items-center gap-2">
                           <CheckCircle className={`w-4 h-4 ${
                             route.roadCondition === 'Excellent' ? 'text-green-600' :
                             route.roadCondition === 'Good' ? 'text-blue-600' : 'text-orange-600'
                           }`} />
-                          <span className="text-sm">{route.roadCondition}</span>
+                          <span className="text-sm text-white">{route.roadCondition}</span>
                         </div>
                       </div>
                     </div>
                     <Button 
-                      className="mt-4" 
+                      className="mt-4 bg-monastery-gold text-black font-semibold rounded-xl border border-monastery-gold hover:bg-monastery-gold hover:text-black hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] transition-all w-full"
                       size="sm"
                       onClick={() => setTravelMode(route.transportMode)}
                     >
@@ -476,22 +459,22 @@ const RoutePlanner: React.FC = () => {
               {transportOptions.map((option) => {
                 const IconComponent = option.icon;
                 return (
-                  <Card key={option.mode} className={`${travelMode === option.mode ? 'ring-2 ring-blue-500' : ''}`}>
+                  <Card key={option.mode} className= "bg-black/60 border-transparent rounded-xl">
                     <CardHeader>
-                      <CardTitle className="flex items-center gap-2">
+                      <CardTitle className="flex items-center gap-2 text-monastery-gold">
                         <IconComponent className="w-5 h-5 text-blue-600" />
                         {option.name}
                       </CardTitle>
-                      <div className="text-sm text-slate-600">
+                      <div className="text-sm text-white">
                         Cost: {option.costPerKm} per km
                       </div>
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div>
-                        <h4 className="font-medium mb-2 text-green-700">Advantages</h4>
+                        <h4 className="font-medium mb-2 text-monastery-gold">Advantages</h4>
                         <ul className="text-sm space-y-1">
                           {option.pros.map((pro, index) => (
-                            <li key={index} className="flex items-start gap-2">
+                            <li key={index} className="flex items-start gap-2 text-white">
                               <CheckCircle className="w-3 h-3 text-green-600 mt-1" />
                               {pro}
                             </li>
@@ -499,10 +482,10 @@ const RoutePlanner: React.FC = () => {
                         </ul>
                       </div>
                       <div>
-                        <h4 className="font-medium mb-2 text-orange-700">Considerations</h4>
+                        <h4 className="font-medium mb-2 text-monastery-gold">Considerations</h4>
                         <ul className="text-sm space-y-1">
                           {option.cons.map((con, index) => (
-                            <li key={index} className="flex items-start gap-2">
+                            <li key={index} className="flex items-start gap-2 text-white">
                               <AlertCircle className="w-3 h-3 text-orange-600 mt-1" />
                               {con}
                             </li>
@@ -510,11 +493,11 @@ const RoutePlanner: React.FC = () => {
                         </ul>
                       </div>
                       <div className="pt-2 border-t">
-                        <div className="text-sm"><strong>Best for:</strong> {option.suitableFor}</div>
-                        <div className="text-sm text-slate-600 mt-1">{option.bookingInfo}</div>
+                        <div className="text-sm text-white"><strong>Best for:</strong> {option.suitableFor}</div>
+                        <div className="text-sm text-white mt-1">{option.bookingInfo}</div>
                       </div>
                       <Button 
-                        className="w-full" 
+                        className="w-full bg-monastery-gold text-black font-semibold rounded-xl border border-monastery-gold hover:bg-monastery-gold hover:text-black hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] transition-all" 
                         size="sm"
                         onClick={() => setTravelMode(option.mode)}
                       >
@@ -530,39 +513,39 @@ const RoutePlanner: React.FC = () => {
           <TabsContent value="costs">
             <div className="grid md:grid-cols-2 gap-6">
               {/* Cost Breakdown */}
-              <Card>
+              <Card className="bg-black/60 border-transparent rounded-xl">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
+                  <CardTitle className="flex items-center gap-2 text-monastery-gold">
                     <Calculator className="w-5 h-5 text-green-600" />
                     Cost Breakdown
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-3">
-                    <div className="flex justify-between items-center">
-                      <span>Base Transportation Cost</span>
+                    <div className="flex justify-between items-center text-white">
+                      <span>Base Transportation Cost</span> 
                       <span className="font-semibold">{selectedRoute.cost}</span>
                     </div>
-                    <div className="flex justify-between items-center">
+                    <div className="flex justify-between items-center text-white">
                       <span>Fuel Cost</span>
                       <span className="font-semibold">{selectedRoute.fuelCost}</span>
                     </div>
-                    <div className="flex justify-between items-center">
+                    <div className="flex justify-between items-center text-white">
                       <span>Toll Charges</span>
                       <span className="font-semibold">{selectedRoute.tollCost}</span>
                     </div>
-                    <div className="flex justify-between items-center">
+                    <div className="flex justify-between items-center text-white">
                       <span>Parking Fees</span>
                       <span className="font-semibold">{selectedRoute.parkingCost}</span>
                     </div>
                     {travelers > 1 && (
-                      <div className="flex justify-between items-center">
+                      <div className="flex justify-between items-center text-white">
                         <span>Additional Travelers ({travelers - 1})</span>
                         <span className="font-semibold">₹{((travelers - 1) * 500).toLocaleString()}</span>
                       </div>
                     )}
                     <div className="border-t pt-3">
-                      <div className="flex justify-between items-center text-lg font-bold">
+                      <div className="flex justify-between items-center text-lg font-bold text-monastery-gold">
                         <span>Total Estimated Cost</span>
                         <span className="text-green-600">₹{calculateTotalCost().toLocaleString()}</span>
                       </div>
@@ -582,9 +565,9 @@ const RoutePlanner: React.FC = () => {
               </Card>
 
               {/* Budget Comparison */}
-              <Card>
+              <Card className="bg-black/60 border-transparent rounded-xl">
                 <CardHeader>
-                  <CardTitle>Transport Mode Comparison</CardTitle>
+                  <CardTitle className='text-monastery-gold'>Transport Mode Comparison</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
