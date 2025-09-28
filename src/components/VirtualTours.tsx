@@ -1,18 +1,38 @@
-import React, { useState } from 'react';
+import { type FC, useState } from 'react';
 import { Card } from './ui/card';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
-import { RotateCcw, Headphones, Play } from 'lucide-react';
+import { RotateCcw, Headphones, Play, X } from 'lucide-react';
 import tours from '../lib/tours';
 import { getTourTypeBadge } from '../lib/utils';
+import PemayangtseVirtualTour from './virtual-tours/PemayangtseVirtualTour';
 
-const VirtualTours: React.FC = () => {
+const VirtualTours: FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedTour, setSelectedTour] = useState(null);
+  const [selectedTour, setSelectedTour] = useState<any>(null);
+  
   const filteredTours = tours.filter(tour =>
     tour.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     tour.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  if (selectedTour) {
+    if (selectedTour.name === "Pemayangtse Monastery") {
+      return (
+        <div className="relative w-full h-screen">
+          <Button
+            onClick={() => setSelectedTour(null)}
+            className="absolute top-4 right-4 z-10 bg-black/50 hover:bg-black/70 text-white rounded-full p-2"
+            variant="ghost"
+          >
+            <X className="w-6 h-6" />
+          </Button>
+          <PemayangtseVirtualTour />
+        </div>
+      );
+    }
+  }
+
   return (
     <div className="py-20 bg-gradient-to-b from-black via-gray-900 to-black min-h-screen">
       <div className="container mx-auto px-4">
