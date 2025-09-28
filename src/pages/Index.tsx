@@ -14,6 +14,8 @@ import EnhancedAdminDashboard from '@/components/EnhancedAdminDashboard';
 import ExperiencesHub from '@/components/ExperiencesHub';
 import TourismHub from '@/components/TourismHub';
 import AboutSikkim from '@/components/AboutSikkim';
+import FoodSikkim from '@/components/FoodSikkim';
+import DanceSikkim from '@/components/DanceSikkim';
 
 const AppContent: React.FC = () => {
   const { state } = useAppContext();
@@ -22,6 +24,10 @@ const AppContent: React.FC = () => {
     switch (state.currentView) {
       case 'about-sikkim':
         return <AboutSikkim />;
+      case 'foods':
+        return <FoodSikkim />;
+      case 'dance':
+        return <DanceSikkim />;
       case 'experiences':
         return <ExperiencesHub />;
       case 'tourism':
