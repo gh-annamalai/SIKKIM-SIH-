@@ -13,12 +13,15 @@ import AdminDashboard from '@/components/AdminDashboard';
 import EnhancedAdminDashboard from '@/components/EnhancedAdminDashboard';
 import ExperiencesHub from '@/components/ExperiencesHub';
 import TourismHub from '@/components/TourismHub';
+import AboutSikkim from '@/components/AboutSikkim';
 
 const AppContent: React.FC = () => {
   const { state } = useAppContext();
 
   const renderCurrentView = () => {
     switch (state.currentView) {
+      case 'about-sikkim':
+        return <AboutSikkim />;
       case 'experiences':
         return <ExperiencesHub />;
       case 'tourism':
