@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mountain, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAppContext } from '@/context/AppContext';
 
@@ -45,7 +45,11 @@ const Header: React.FC = () => {
               onClick={() => setCurrentView('landing')}
             >
               <div className="relative">
-                <Mountain className="h-8 w-8 text-monastery-gold" />
+                <img 
+                  src="/Logo.png" 
+                  alt="Monastery360 Logo"
+                  className="h-10 w-10 object-contain"
+                />
               </div>
               <div>
                 <h1 className="text-2xl font-extrabold text-white tracking-widest drop-shadow">MONASTERY360</h1>
