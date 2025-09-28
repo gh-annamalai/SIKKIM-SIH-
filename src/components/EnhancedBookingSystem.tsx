@@ -1046,7 +1046,7 @@ const EnhancedBookingSystem: React.FC = () => {
                     <Download className="w-4 h-4 mr-2" />
                     Export
                   </Button>
-                  <Button size="sm" onClick={() => setActiveTab('book')}>
+                  <Button size="sm" className ="bg-monastery-gold text-black font-semibold rounded-xl border border-monastery-gold hover:bg-monastery-gold hover:text-black hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] transition-all" onClick={() => setActiveTab('book')}>
                     <Plus className="w-4 h-4 mr-2" />
                     New Booking
                   </Button>
@@ -1124,20 +1124,20 @@ const EnhancedBookingSystem: React.FC = () => {
           {/* Guides Tab */}
           <TabsContent value="guides">
             <div className="text-center py-12">
-              <UserCheck className="w-16 h-16 text-slate-300 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Guide Management</h3>
-              <p className="text-slate-600 mb-4">Manage tour guides, schedules, and assignments</p>
-              <Button variant="outline">Coming Soon</Button>
+              <UserCheck className="w-16 h-16 text-monastery-gold mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-2 text-monastery-gold ">Guide Management</h3>
+              <p className="text-white mb-4">Manage tour guides, schedules, and assignments</p>
+              <Button variant="outline" className="bg-monastery-gold text-black font-semibold rounded-xl border border-monastery-gold hover:bg-monastery-gold hover:text-black hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] transition-all">Coming Soon</Button>
             </div>
           </TabsContent>
 
           {/* Analytics Tab */}
           <TabsContent value="analytics">
             <div className="text-center py-12">
-              <BarChart3 className="w-16 h-16 text-slate-300 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Booking Analytics</h3>
-              <p className="text-slate-600 mb-4">View booking statistics and performance metrics</p>
-              <Button variant="outline">Coming Soon</Button>
+              <BarChart3 className="w-16 h-16 text-monastery-gold mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-2 text-monastery-gold">Booking Analytics</h3>
+              <p className="text-white mb-4">View booking statistics and performance metrics</p>
+              <Button variant="outline" className="bg-monastery-gold text-black font-semibold rounded-xl border border-monastery-gold hover:bg-monastery-gold hover:text-black hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] transition-all">Coming Soon</Button>
             </div>
           </TabsContent>
         </Tabs>
