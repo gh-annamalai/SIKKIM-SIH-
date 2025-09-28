@@ -41,14 +41,18 @@ const Header: React.FC = () => {
           <div className="flex items-center justify-between relative">
             {/* Logo Left */}
             <div 
-              className="flex items-center space-x-2 cursor-pointer"
+              className="flex items-center space-x-3 cursor-pointer"
               onClick={() => setCurrentView('landing')}
             >
               <div className="relative">
                 <img 
-                  src="/Logo.png" 
+                  src="/monastery360-logo.jpeg" 
                   alt="Monastery360 Logo"
-                  className="h-10 w-10 object-contain"
+                  className="h-12 w-12 object-contain"
+                  onError={(e) => {
+                    console.log('Logo failed to load, falling back to Logo.png');
+                    e.currentTarget.src = '/Logo.png';
+                  }}
                 />
               </div>
               <div>
