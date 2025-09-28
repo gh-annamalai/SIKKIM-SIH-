@@ -202,43 +202,7 @@ const EnhancedCommunityHub: React.FC = () => {
         </div>
 
         {/* Community Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
-          <Card className="text-center bg-white border-none shadow-lg rounded-xl">
-            <CardContent className="pt-4">
-              <Users className="w-8 h-8 text-blue-600 mx-auto mb-2" />
-              <div className="text-2xl font-bold">{0}</div>
-              <div className="text-sm text-slate-600">Total Members</div>
-            </CardContent>
-          </Card>
-          <Card className="text-center bg-white border-none shadow-lg rounded-xl">
-            <CardContent className="pt-4">
-              <TrendingUp className="w-8 h-8 text-green-600 mx-auto mb-2" />
-              <div className="text-2xl font-bold">{0}</div>
-              <div className="text-sm text-black">Active Today</div>
-            </CardContent>
-          </Card>
-          <Card className="text-center bg-white border-none shadow-lg rounded-xl">
-            <CardContent className="pt-4">
-              <MessageCircle className="w-8 h-8 text-purple-600 mx-auto mb-2" />
-              <div className="text-2xl font-bold">{0}</div>
-              <div className="text-sm text-black">Discussions</div>
-            </CardContent>
-          </Card>
-          <Card className="text-center bg-white border-none shadow-lg rounded-xl">
-            <CardContent className="pt-4">
-              <Camera className="w-8 h-8 text-pink-600 mx-auto mb-2" />
-              <div className="text-2xl font-bold">{0}</div>
-              <div className="text-sm text-black">Photos Shared</div>
-            </CardContent>
-          </Card>
-          <Card className="text-center bg-white border-none shadow-lg rounded-xl">
-            <CardContent className="pt-4">
-              <Award className="w-8 h-8 text-orange-600 mx-auto mb-2" />
-              <div className="text-2xl font-bold">{0}</div>
-              <div className="text-sm text-black">Online Guides</div>
-            </CardContent>
-          </Card>
-        </div>
+        
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-6 mb-8 max-w-4xl mx-auto bg-black/60 border border-monastery-gold rounded-xl p-1">

@@ -154,12 +154,12 @@ const AdvancedSearchEngine: React.FC = () => {
   };
 
   return (
-    <div className="py-12 bg-gradient-to-b from-slate-50 to-white">
+    <div className="py-12 bg-black/60">
       <div className="container mx-auto px-4 max-w-7xl">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-slate-800 mb-2">Advanced Search Engine</h1>
-          <p className="text-slate-600 max-w-2xl mx-auto">
+          <h1 className="text-3xl font-bold text-monastery-gold mb-2">Advanced Search Engine</h1>
+          <p className="text-white max-w-2xl mx-auto">
             Discover ancient manuscripts, artifacts, and treasures using AI-powered search with OCR text recognition and intelligent translation
           </p>
         </div>
@@ -169,28 +169,30 @@ const AdvancedSearchEngine: React.FC = () => {
           <CardContent className="pt-6">
             {/* Search Input */}
             <div className="relative mb-6">
-              <Search className="absolute left-4 top-4 w-5 h-5 text-slate-400" />
-              <Input
-                placeholder="Search ancient manuscripts, artifacts, or ask questions in natural language..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-12 pr-4 py-3 text-lg"
-                onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-              />
-              <div className="absolute right-2 top-2 flex gap-2">
-                <Button size="sm" variant="outline">
-                  <Mic className="w-4 h-4" />
-                </Button>
-                <Button size="sm" variant="outline">
-                  <Camera className="w-4 h-4" />
-                </Button>
-                <Button 
-                  onClick={handleSearch}
-                  disabled={isSearching}
-                  className="px-6"
-                >
-                  {isSearching ? <RefreshCw className="w-4 h-4 animate-spin" /> : 'Search'}
-                </Button>
+              <div className="flex items-center w-full gap-2">
+                <Search className="absolute left-4 top-4 w-5 h-5 text-slate-400" />
+                <Input
+                  placeholder="Search ancient manuscripts, artifacts, or ask questions in natural language..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-12 pr-4 py-3 text-lg rounded-l-xl border-none focus:ring-0 bg-[#fcf8f6] flex-1"
+                  onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+                />
+                <div className="flex items-center gap-2 bg-[#fcf8f6] rounded-r-xl h-full">
+                  <Button size="sm" variant="ghost" className="rounded-full">
+                    <Mic className="w-4 h-4" />
+                  </Button>
+                  <Button size="sm" variant="ghost" className="rounded-full">
+                    <Camera className="w-4 h-4" />
+                  </Button>
+                  <Button 
+                    onClick={handleSearch}
+                    disabled={isSearching}
+                    className="px-6 h-full rounded-r-xl bg-monastery-gold text-black font-semibold shadow-none border-none ml-2"
+                  >
+                    {isSearching ? <RefreshCw className="w-4 h-4 animate-spin" /> : 'Search'}
+                  </Button>
+                </div>
               </div>
             </div>
 
@@ -368,7 +370,7 @@ const AdvancedSearchEngine: React.FC = () => {
         {searchResults.length > 0 && (
           <div className="space-y-6">
             <div className="flex items-center justify-between">
-              <h2 className="text-xl font-semibold">Search Results ({searchResults.length})</h2>
+              <h2 className="text-xl font-semibold text-monastery-gold">Search Results ({searchResults.length})</h2>
               <div className="flex gap-2">
                 <Button variant="outline" size="sm">
                   <Filter className="w-4 h-4 mr-2" />
@@ -482,7 +484,7 @@ const AdvancedSearchEngine: React.FC = () => {
 
                         {/* Actions */}
                         <div className="flex items-center gap-3">
-                          <Button size="sm">
+                          <Button size="sm" className = "bg-monastery-gold text-black">
                             <BookOpen className="w-4 h-4 mr-2" />
                             View Full Text
                           </Button>
