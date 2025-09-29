@@ -11,7 +11,7 @@ const center = {
   lng: 88.55,   // Rumtek Monastery longitude
 };
 
-const GOOGLE_MAPS_API_KEY = 'AIzaSyD2raFFnpOWfEuiXkTDDMel9HgssH_QhAo'; // <-- Replace with your API key
+const GOOGLE_MAPS_API_KEY = 'AIzaSyA6Qb_gXzhqObIg80E34-mEfP41yZC_1hk'; // <-- Replace with your API key
 
 const MapView: React.FC = () => {
   const { isLoaded } = useJsApiLoader({

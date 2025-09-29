@@ -18,7 +18,7 @@ import {
   Globe
 } from 'lucide-react';
 
-const GOOGLE_MAPS_API_KEY = 'AIzaSyD2raFFnpOWfEuiXkTDDMel9HgssH_QhAo'; // <-- Replace with your API key
+const GOOGLE_MAPS_API_KEY = 'AIzaSyA6Qb_gXzhqObIg80E34-mEfP41yZC_1hk'; // <-- Replace with your API key
 const containerStyle = { width: '100%', height: '400px' };
 const center = { lat: 27.3011, lng: 88.55 };
 
@@ -26,20 +26,32 @@ const EnhancedInteractiveMap: React.FC = () => {
   const { isLoaded } = useJsApiLoader({ googleMapsApiKey: GOOGLE_MAPS_API_KEY });
   const [selectedMonastery, setSelectedMonastery] = useState<string | null>('rumtek');
   const [activeView, setActiveView] = useState('map');
-  const [showDirections, setShowDirections] = useState(false);
+  
   const [searchQuery, setSearchQuery] = useState("");
   // Enchey Monastery coordinates (Gangtok, Sikkim): 27.3456° N, 88.6131° E
   const ENCHEY_MONASTERY = { lat: 27.3456, lng: 88.6131 };
-  const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
+
+  const [userLocation, setUserLocation] = useState<google.maps.LatLngLiteral | null>(null);
+  const [showDirections, setShowDirections] = useState(false);
   const [directions, setDirections] = useState<google.maps.DirectionsResult | null>(null);
   const [directionsLoading, setDirectionsLoading] = useState(false);
+const handleGetDirections = () => {
+    if (!selectedPlace) return;
 
+    // Set the starting point to Enchey Monastery
+    const origin = ENCHEY_MONASTERY;
+    
+    setUserLocation(origin);
+    setShowDirections(true);
+    setDirections(null); // Clear previous directions before fetching new ones
+    setDirectionsLoading(true);
+};
   const monasteries = [
     {
       id: 'rumtek',
       name: 'Rumtek Monastery',
       location: 'East Sikkim',
-      coordinates: '27.3011° N, 88.5500° E',
+      latLng: { lat: 27.3011, lng: 88.55 },
       distance: '24 km from Gangtok',
       elevation: '1,550m',
       established: '1966',
@@ -70,7 +82,7 @@ const EnhancedInteractiveMap: React.FC = () => {
       id: 'pemayangtse',
       name: 'Pemayangtse Monastery',
       location: 'West Sikkim',
-      coordinates: '27.2167° N, 88.2500° E',
+      latLng: { lat: 27.2817, lng: 88.2549 },
       distance: '110 km from Gangtok',
       elevation: '2,085m',
       established: '1705',
@@ -101,7 +113,7 @@ const EnhancedInteractiveMap: React.FC = () => {
       id: 'tashiding',
       name: 'Tashiding Monastery',
       location: 'West Sikkim',
-      coordinates: '27.2833° N, 88.2667° E',
+      latLng: { lat: 27.2833, lng: 88.2667 },
       distance: '118 km from Gangtok',
       elevation: '1,465m',
       established: '1717',
@@ -195,25 +207,31 @@ const EnhancedInteractiveMap: React.FC = () => {
                               {!directions && directionsLoading && (
                                 <div className="absolute top-2 left-2 bg-white p-2 rounded shadow">Loading directions...</div>
                               )}
-                              <DirectionsService
-                                options={{
-                                  origin: userLocation,
-                                  destination: center,
-                                  travelMode: google.maps.TravelMode.DRIVING,
-                                }}
-                                callback={result => {
-                                  setDirectionsLoading(false);
-                                  if (result && result.status === 'OK') {
-                                    setDirections(result);
-                                  } else {
-                                    alert('Could not find a route!');
-                                    setShowDirections(false);
-                                  }
-                                }}
-                              />
-                              {directions && <DirectionsRenderer directions={directions} />}
+                              {!directions && (
+                                <DirectionsService
+                                  options={{
+                                    origin: userLocation,
+                                    destination: selectedPlace?.latLng,
+                                    travelMode: google.maps.TravelMode.DRIVING,
+                                  }}
+                                  callback={(result, status) => {
+                                    setDirectionsLoading(false);
+                                    if (status === 'OK' && result) {
+                                      setDirections(result);
+                                    } else {
+                                      console.error(`Directions request failed due to ${status}`);
+                                      alert('Could not find a route!');
+                                      setShowDirections(false);
+                                    }
+                                  }}
+                                />
+                              )}
+                              {directions && (
+                                <DirectionsRenderer directions={directions} />
+                              )}
                             </>
                           )}
+
                         </GoogleMap>
                       )}
                     </div>
@@ -264,9 +282,13 @@ const EnhancedInteractiveMap: React.FC = () => {
                       </div>
                     </div>
                     <div className="flex flex-col gap-2 pt-2">
-                      <Button className="w-full bg-monastery-gold text-black font-semibold rounded-full border-2 border-monastery-gold transition-all duration-200 hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.4)] focus:ring-2 focus:ring-yellow-300 focus:outline-none">
-                        Get Directions from Enchey Monastery
-                      </Button>
+                      <Button 
+  onClick={handleGetDirections}
+  className="w-full bg-monastery-gold text-black font-semibold rounded-full border-2 border-monastery-gold transition-all duration-200 hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.4)] focus:ring-2 focus:ring-yellow-300 focus:outline-none"
+>
+  Get Directions from Enchey Monastery
+</Button>
+
                       <Button className="w-full bg-black/40 text-monastery-gold font-semibold rounded-full border border-monastery-gold transition-all duration-200 hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.4)] focus:ring-2 focus:ring-yellow-300 focus:outline-none">
                         Virtual Tour
                       </Button>
