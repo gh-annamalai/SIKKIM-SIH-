@@ -1,18 +1,51 @@
-import React, { useState } from 'react';
+import { type FC, useState } from 'react';
 import { Card } from './ui/card';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
-import { RotateCcw, Headphones, Play } from 'lucide-react';
+import { RotateCcw, Headphones, Play, X } from 'lucide-react';
 import tours from '../lib/tours';
 import { getTourTypeBadge } from '../lib/utils';
+import PemayangtseVirtualTour from './virtual-tours/PemayangtseVirtualTour';
+import VirtualTour360 from './VirtualTour360';
 
-const VirtualTours: React.FC = () => {
+const VirtualTours: FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedTour, setSelectedTour] = useState(null);
+  const [selectedTour, setSelectedTour] = useState<any>(null);
+  const [is360TourOpen, setIs360TourOpen] = useState(false);
+  
   const filteredTours = tours.filter(tour =>
     tour.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     tour.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const handleStartExperience = (tour) => {
+    if (tour.type === '360') {
+      setSelectedTour(tour);
+      setIs360TourOpen(true);
+    } else {
+      setSelectedTour(tour);
+    }
+  };
+
+  const handle360TourClose = () => {
+    setIs360TourOpen(false);
+    setSelectedTour(null);
+  };
+
+  if (selectedTour?.name === "Pemayangtse Monastery" && is360TourOpen) {
+    return (
+      <div className="relative w-full h-screen">
+        <Button
+          onClick={handle360TourClose}
+          className="absolute top-4 right-4 z-10 bg-black/50 hover:bg-black/70 text-white rounded-full p-2"
+          variant="ghost"
+        >
+          <X className="w-6 h-6" />
+        </Button>
+        <PemayangtseVirtualTour />
+      </div>
+    );
+  }
   return (
     <div className="py-20 bg-gradient-to-b from-black via-gray-900 to-black min-h-screen">
       <div className="container mx-auto px-4">
@@ -80,7 +113,7 @@ const VirtualTours: React.FC = () => {
                 </div>
                 <div className="mt-auto flex justify-center">
                   <Button 
-                    onClick={() => setSelectedTour(tour)}
+                    onClick={() => handleStartExperience(tour)}
                     className="w-5/6 mx-auto mb-4 bg-monastery-gold text-black font-semibold rounded-full shadow-lg hover:bg-yellow-400 focus:ring-2 focus:ring-yellow-300 focus:outline-none transition-all duration-200 border-2 border-monastery-gold"
                   >
                     <Play className="w-4 h-4 mr-2" />
@@ -92,6 +125,15 @@ const VirtualTours: React.FC = () => {
           ))}
         </div>
       </div>
+
+      {/* 360° Virtual Tour Modal */}
+      {selectedTour && (
+        <VirtualTour360 
+          isOpen={is360TourOpen}
+          onClose={handle360TourClose}
+          tourData={selectedTour}
+        />
+      )}
     </div>
   );
 };
