@@ -19,13 +19,11 @@ const Header: React.FC = () => {
 
   const aboutDropdownItems = [
     { label: 'About Sikkim', view: 'about-sikkim' as const },
-    { label: 'History & Culture', view: 'about-sikkim' as const }, // Using existing view for now
-    { label: 'Monasteries', view: 'about-sikkim' as const }, // Using existing view for now
-    { label: 'Tourist Attractions', view: 'about-sikkim' as const }, // Using existing view for now
-    { label: 'Local Cuisine', view: 'about-sikkim' as const }, // Using existing view for now
     { label: 'Foods', view: 'foods' as const },
     { label: 'Dance', view: 'dance' as const },
-    { label: 'Festivals', view: 'about-sikkim' as const } // Using existing view for now
+    { label: 'Jewellery', view: 'jewellery' as const },
+    { label: 'Languages', view: 'languages' as const },
+    { label: 'Instruments', view: 'instruments' as const },
   ];
 
   const handleAdminAction = () => {

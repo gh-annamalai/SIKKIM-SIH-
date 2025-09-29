@@ -16,6 +16,9 @@ import TourismHub from '@/components/TourismHub';
 import AboutSikkim from '@/components/AboutSikkim';
 import FoodSikkim from '@/components/FoodSikkim';
 import DanceSikkim from '@/components/DanceSikkim';
+import JewelSikkim from '@/components/JewelSikkim';
+import LanguageSikkim from '@/components/LanguageSikkim';
+import InstrumentSikkim from '@/components/InstrumentSikkim';
 
 const AppContent: React.FC = () => {
   const { state } = useAppContext();
@@ -28,6 +31,12 @@ const AppContent: React.FC = () => {
         return <FoodSikkim />;
       case 'dance':
         return <DanceSikkim />;
+      case 'jewellery':
+        return <JewelSikkim />;
+      case 'languages':
+        return <LanguageSikkim />;
+      case 'instruments':
+        return <InstrumentSikkim />;
       case 'experiences':
         return <ExperiencesHub />;
       case 'tourism':
