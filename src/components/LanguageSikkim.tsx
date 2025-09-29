@@ -153,21 +153,21 @@ const LanguageSikkim: React.FC = () => {
 
           {/* Language Categories */}
           <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-gradient-to-br from-slate-900/50 to-slate-800/30 backdrop-blur-sm rounded-xl p-6 border border-white/10">
+            <div className="bg-black/60 backdrop-blur-sm rounded-xl p-6 border-transparent">
               <h4 className="text-lg font-bold text-monastery-gold mb-3">Indigenous Languages</h4>
               <p className="text-slate-300 text-sm">
                 Lepcha, Limbu, and other indigenous languages preserve ancient traditions 
                 and unique scripts that are integral to Sikkim's cultural heritage.
               </p>
             </div>
-            <div className="bg-gradient-to-br from-slate-900/50 to-slate-800/30 backdrop-blur-sm rounded-xl p-6 border border-white/10">
+            <div className="bg-black/60 backdrop-blur-sm rounded-xl p-6 border-transparent">
               <h4 className="text-lg font-bold text-monastery-gold mb-3">Community Languages</h4>
               <p className="text-slate-300 text-sm">
                 Nepali, Bhutia, and other community languages serve as bridges between 
                 different cultural groups, fostering understanding and unity.
               </p>
             </div>
-            <div className="bg-gradient-to-br from-slate-900/50 to-slate-800/30 backdrop-blur-sm rounded-xl p-6 border border-white/10">
+            <div className="bg-black/60 backdrop-blur-sm rounded-xl p-6 border-transparent">
               <h4 className="text-lg font-bold text-monastery-gold mb-3">Official Languages</h4>
               <p className="text-slate-300 text-sm">
                 Hindi and English facilitate communication across communities and 
