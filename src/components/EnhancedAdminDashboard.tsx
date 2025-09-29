@@ -303,7 +303,9 @@ const EnhancedAdminDashboard: React.FC = () => {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-6 mb-8 max-w-5xl mx-auto bg-black/60 backdrop-blur-lg border-none shadow-2xl rounded-2xl">
+
+          <TabsList className="grid w-full grid-cols-6 mb-8 max-w-5xl mx-auto bg-black/60 backdrop-blur-lg border-2 border-monastery-gold shadow-2xl rounded-2xl">
+ 
             <TabsTrigger value="overview" className="text-monastery-gold font-bold data-[state=active]:bg-monastery-gold/80 data-[state=active]:text-black data-[state=active]:shadow-lg">
               <BarChart3 className="w-4 h-4 mr-2" />
               Overview

@@ -28,81 +28,26 @@ import {
   Info
 } from 'lucide-react';
 
+const MONASTERIES = {
+  'Rumtek Monastery': { lat: 27.3331, lng: 88.6200 },
+  'Pemayangtse Monastery': { lat: 27.3005, lng: 88.2336 },
+  'Tashiding Monastery': { lat: 27.2852, lng: 88.2832 }
+};
+
 const RoutePlanner: React.FC = () => {
   const [startLocation, setStartLocation] = useState('');
+  const [userCoords, setUserCoords] = useState<{lat: number, lng: number} | null>(null);
   const [endLocation, setEndLocation] = useState('Rumtek Monastery');
   const [travelMode, setTravelMode] = useState('car');
   const [travelers, setTravelers] = useState(2);
   const [activeTab, setActiveTab] = useState('planner');
+  const [routeData, setRouteData] = useState<{distance: string, duration: string, steps: any[]} | null>(null);
+  const [cityNames, setCityNames] = useState<string[]>([]);
+  const [amenities, setAmenities] = useState<any[]>([]);
+  const [loadingRoute, setLoadingRoute] = useState(false);
+  const [error, setError] = useState('');
 
-  const routeOptions = [
-    {
-      id: 1,
-      name: 'Scenic Mountain Route',
-      distance: '142 km',
-      duration: '4h 30min',
-      cost: '₹2,400',
-      difficulty: 'Moderate',
-      highlights: ['Mountain Views', 'Tea Gardens', 'Local Villages', 'Photo Stops'],
-      route: ['Siliguri', 'Kalimpong', 'Gangtok', 'Rumtek Monastery'],
-      transportMode: 'car',
-      roadCondition: 'Good',
-      bestTime: 'Morning (6 AM - 10 AM)',
-      fuelCost: '₹1,200',
-      tollCost: '₹150',
-      parkingCost: '₹100',
-      warnings: ['Mountain roads - drive carefully', 'Weather dependent'],
-      stops: [
-        { name: 'Kalimpong', duration: '30 min', type: 'Scenic Stop' },
-        { name: 'Gangtok MG Road', duration: '45 min', type: 'Lunch Break' },
-        { name: 'Rumtek Village', duration: '15 min', type: 'Local Market' }
-      ]
-    },
-    {
-      id: 2,
-      name: 'Direct Highway Route',
-      distance: '118 km',
-      duration: '3h 15min',
-      cost: '₹1,800',
-      difficulty: 'Easy',
-      highlights: ['Fastest Route', 'Highway Driving', 'Rest Stops', 'Good Roads'],
-      route: ['Siliguri', 'Rangpo', 'Gangtok', 'Rumtek Monastery'],
-      transportMode: 'car',
-      roadCondition: 'Excellent',
-      bestTime: 'Anytime',
-      fuelCost: '₹900',
-      tollCost: '₹200',
-      parkingCost: '₹100',
-      warnings: ['Heavy traffic during peak hours'],
-      stops: [
-        { name: 'Rangpo Check Post', duration: '20 min', type: 'Permit Check' },
-        { name: 'Singtam', duration: '15 min', type: 'Refreshment' }
-      ]
-    },
-    {
-      id: 3,
-      name: 'Cultural Heritage Route',
-      distance: '165 km',
-      duration: '5h 45min',
-      cost: '₹3,200',
-      difficulty: 'Challenging',
-      highlights: ['Multiple Monasteries', 'Cultural Sites', 'Local Experiences', 'Photography'],
-      route: ['Siliguri', 'Darjeeling', 'Pelling', 'Gangtok', 'Rumtek Monastery'],
-      transportMode: 'car',
-      roadCondition: 'Mixed',
-      bestTime: 'Early Morning (5 AM start)',
-      fuelCost: '₹1,500',
-      tollCost: '₹100',
-      parkingCost: '₹200',
-      warnings: ['Long journey - plan overnight stay', 'Mountain weather conditions'],
-      stops: [
-        { name: 'Darjeeling Tiger Hill', duration: '1 hour', type: 'Sunrise View' },
-        { name: 'Pemayangtse Monastery', duration: '1.5 hours', type: 'Cultural Visit' },
-        { name: 'Gangtok Overnight', duration: '12 hours', type: 'Rest Stop' }
-      ]
-    }
-  ];
-
+  // ...existing code...
   const transportOptions = [
     {
       mode: 'car',
@@ -136,12 +81,131 @@ const RoutePlanner: React.FC = () => {
     }
   ];
 
-  const selectedRoute = routeOptions.find(route => route.transportMode === travelMode) || routeOptions[0];
-
+  // Use API data for cost estimation (example logic)
   const calculateTotalCost = () => {
-    const baseCost = parseInt(selectedRoute.cost.replace('₹', '').replace(',', ''));
-    const additionalCost = (travelers - 1) * 500; // Additional cost per extra traveler
+    if (!routeData) return 0;
+    // Example: ₹15/km for car, ₹5/km for bus, ₹10/km for taxi, ₹50/km for flight
+    const modeRates: any = { car: 15, bus: 5, taxi: 10, flight: 50 };
+    const rate = modeRates[travelMode] || 15;
+    const distanceNum = routeData.distance ? parseFloat(routeData.distance.replace(/[^0-9.]/g, '')) : 0;
+    const baseCost = Math.round(distanceNum * rate);
+    const additionalCost = (travelers - 1) * 500;
     return baseCost + additionalCost;
+  };
+
+  // Get user's current location
+  const handleGetLocation = () => {
+    setError('');
+    if (!navigator.geolocation) {
+      setError('Geolocation is not supported by your browser.');
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setUserCoords({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+        setStartLocation(`${pos.coords.latitude},${pos.coords.longitude}`);
+      },
+      () => setError('Unable to retrieve your location.')
+    );
+  };
+
+  // Fetch route from Google Maps Directions API and then city names and amenities
+  const handleFindRoute = async () => {
+    setLoadingRoute(true);
+    setError('');
+    setCityNames([]);
+    setAmenities([]);
+    try {
+      const origin = userCoords ? `${userCoords.lat},${userCoords.lng}` : startLocation;
+      const destination = MONASTERIES[endLocation];
+      if (!origin || !destination) {
+        setError('Please provide both start and end locations.');
+        setLoadingRoute(false);
+        return;
+      }
+      const travelModeMap: any = { car: 'driving', bus: 'transit', taxi: 'driving', flight: 'driving' };
+      const mode = travelModeMap[travelMode] || 'driving';
+      const apiKey = 'AIzaSyA78JAuOdbNS5EI5XLqpCuPJ8JayIlk4is'; // Replace with your actual API key
+      const url = `http://localhost:5000/api/directions?origin=${origin}&destination=${destination.lat},${destination.lng}&mode=${mode}&key=${apiKey}`;
+      const response = await fetch(url);
+      if (!response.ok) {
+        setError(`Network error: ${response.status} ${response.statusText}`);
+        setLoadingRoute(false);
+        return;
+      }
+      const data = await response.json();
+      if (data.status === 'OK') {
+        const leg = data.routes[0].legs[0];
+        setRouteData({
+          distance: leg.distance.text,
+          duration: leg.duration.text,
+          steps: leg.steps
+        });
+
+        // Extract city names using Nominatim
+        const cityPromises = leg.steps.map(async (step: any) => {
+          const lat = step.start_location.lat;
+          const lon = step.start_location.lng;
+          const nominatimUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10&addressdetails=1`;
+          try {
+            const res = await fetch(nominatimUrl);
+            const json = await res.json();
+            return json.address.city || json.address.town || json.address.village || '';
+          } catch {
+            return '';
+          }
+        });
+        // Filter and deduplicate city names, keep order
+        const rawCities = await Promise.all(cityPromises);
+        const cities = rawCities.filter((c, i, arr) => c && arr.indexOf(c) === i);
+        setCityNames(cities);
+
+        // Find amenities (food, fuel, attractions) using Overpass API
+        // Use first, middle, last step for demo, but limit results per location
+        const stepCoords = [leg.steps[0], leg.steps[Math.floor(leg.steps.length/2)], leg.steps[leg.steps.length-1]]
+          .map(s => ({lat: s.start_location.lat, lon: s.start_location.lng}));
+        const overpassQueries = stepCoords.map(({lat, lon}) => `
+          [out:json][timeout:25];
+          (
+            node["amenity"~"restaurant|fuel|cafe"](around:1000,${lat},${lon});
+            node["tourism"~"attraction"](around:1000,${lat},${lon});
+          );
+          out body;
+        `);
+        const amenityPromises = overpassQueries.map(async (query) => {
+          const res = await fetch('https://overpass-api.de/api/interpreter', {
+            method: 'POST',
+            body: query,
+            headers: { 'Content-Type': 'text/plain' }
+          });
+          const json = await res.json();
+          // Group by type and take top 2 unique per type
+          const grouped = { food: [], fuel: [], attraction: [] };
+          for (const el of json.elements || []) {
+            if (el.tags.amenity === 'restaurant' || el.tags.amenity === 'cafe') {
+              if (grouped.food.length < 2 && !grouped.food.some(f => f.tags.name === el.tags.name)) grouped.food.push(el);
+            } else if (el.tags.amenity === 'fuel') {
+              if (grouped.fuel.length < 2 && !grouped.fuel.some(f => f.tags.name === el.tags.name)) grouped.fuel.push(el);
+            } else if (el.tags.tourism === 'attraction') {
+              if (grouped.attraction.length < 2 && !grouped.attraction.some(a => a.tags.name === el.tags.name)) grouped.attraction.push(el);
+            }
+          }
+          return [...grouped.food, ...grouped.fuel, ...grouped.attraction];
+        });
+        const amenityResults = await Promise.all(amenityPromises);
+        // Deduplicate by name/location
+        const allAmenities = amenityResults.flat();
+        const uniqueAmenities = allAmenities.filter((a, i, arr) => a.tags.name && arr.findIndex(b => b.tags.name === a.tags.name && b.lat === a.lat && b.lon === a.lon) === i);
+        setAmenities(uniqueAmenities);
+      } else {
+        setError(`API error: ${data.status}${data.error_message ? ' - ' + data.error_message : ''}`);
+        console.error('Directions API response:', data);
+      }
+    } catch (err: any) {
+      setError(`Error fetching route: ${err.message || err}`);
+      console.error('Fetch error:', err);
+    }
+    setLoadingRoute(false);
   };
 
   const getWeatherAlert = () => {
@@ -205,11 +269,17 @@ const RoutePlanner: React.FC = () => {
                     {/* Start Location */}
                     <div>
                       <label className="block text-sm font-medium mb-2 text-monastery-gold">From</label>
-                      <Input className ="bg-black/60 border-monastery-gold text-white placeholder-gray-300 focus:ring-2 focus:ring-monastery-gold focus:border-monastery-gold rounded-md"
-                        placeholder="Enter starting location"
+                      <Input className ="bg-black/60 border-monastery-gold text-white placeholder-white focus:ring-2 focus:ring-monastery-gold focus:border-monastery-gold rounded-md"
+                        placeholder="Enter starting location or use current location"
                         value={startLocation}
                         onChange={(e) => setStartLocation(e.target.value)}
                       />
+                      <Button type="button" className="mt-2 bg-monastery-gold text-black" onClick={handleGetLocation}>
+                        Use My Location
+                      </Button>
+                      {userCoords && (
+                        <div className="text-xs text-green-400 mt-1">Location set: {userCoords.lat.toFixed(4)}, {userCoords.lng.toFixed(4)}</div>
+                      )}
                     </div>
 
                     {/* End Location */}
@@ -218,7 +288,7 @@ const RoutePlanner: React.FC = () => {
                       <select 
                         value={endLocation}
                         onChange={(e) => setEndLocation(e.target.value)}
-                        className="w-full px-3 py-2 bg-black/60 border border-monastery-gold rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-3 py-2 bg-black/60 border border-monastery-gold text-white placeholder-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                       >
                         <option value="Rumtek Monastery">Rumtek Monastery</option>
                         <option value="Pemayangtse Monastery">Pemayangtse Monastery</option>
@@ -232,7 +302,7 @@ const RoutePlanner: React.FC = () => {
                       <select 
                         value={travelMode}
                         onChange={(e) => setTravelMode(e.target.value)}
-                        className="w-full px-3 py-2 bg-black/60 border border-monastery-gold rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-3 py-2 bg-black/60 border border-monastery-gold text-white placeholder-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                       >
                         <option value="car">Private Car</option>
                         <option value="bus">Public Bus</option>
@@ -259,10 +329,11 @@ const RoutePlanner: React.FC = () => {
                       <Input type="date" className ="bg-black/60 border-monastery-gold text-white placeholder-white focus:ring-2 focus:ring-monastery-gold focus:border-monastery-gold rounded-md" />
                     </div>
 
-                    <Button className="w-full bg-monastery-gold text-black font-semibold rounded-xl border border-monastery-gold hover:bg-monastery-gold hover:text-black hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] transition-all">
+                    <Button className="w-full bg-monastery-gold text-black font-semibold rounded-xl border border-monastery-gold hover:bg-monastery-gold hover:text-black hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] transition-all" onClick={handleFindRoute} disabled={loadingRoute}>
                       <Navigation className="w-4 h-4 mr-2" />
-                      Find Best Route
+                      {loadingRoute ? 'Finding Route...' : 'Find Best Route'}
                     </Button>
+                    {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
                   </CardContent>
                 </Card>
 
@@ -298,12 +369,12 @@ const RoutePlanner: React.FC = () => {
                       <div className="text-center p-3 bg-blue-50 rounded-lg">
                         <Navigation className="w-6 h-6 text-blue-600 mx-auto mb-1" />
                         <div className="text-sm text-slate-600">Distance</div>
-                        <div className="font-semibold">{selectedRoute.distance}</div>
+                        <div className="font-semibold">{routeData?.distance || 'N/A'}</div>
                       </div>
                       <div className="text-center p-3 bg-green-50 rounded-lg">
                         <Clock className="w-6 h-6 text-green-600 mx-auto mb-1" />
                         <div className="text-sm text-slate-600">Duration</div>
-                        <div className="font-semibold">{selectedRoute.duration}</div>
+                        <div className="font-semibold">{routeData?.duration || 'N/A'}</div>
                       </div>
                       <div className="text-center p-3 bg-purple-50 rounded-lg">
                         <DollarSign className="w-6 h-6 text-purple-600 mx-auto mb-1" />
@@ -313,25 +384,24 @@ const RoutePlanner: React.FC = () => {
                       <div className="text-center p-3 bg-orange-50 rounded-lg">
                         <Star className="w-6 h-6 text-orange-600 mx-auto mb-1" />
                         <div className="text-sm text-slate-600">Best Time</div>
-                        <div className="font-semibold text-xs">{selectedRoute.bestTime}</div>
+                        <div className="font-semibold text-xs">N/A</div>
                       </div>
                     </div>
 
-                    {/* Route Path */}
+                    {/* Route Path - Only Important Cities */}
                     <div>
-                      <h3 className="font-semibold mb-3 text-monastery-gold">Route Path</h3>
-                      <div className="flex items-center gap-2 flex-wrap">
-                        {selectedRoute.route.map((location, index) => (
-                          <div key={index} className="flex items-center gap-2">
-                            <div className="flex items-center gap-2 px-3 py-1 bg-slate-100 rounded-full">
+                      <h3 className="font-semibold mb-3 text-monastery-gold">Route Path (Major Cities)</h3>
+                      <div className="flex flex-col gap-2">
+                        {cityNames.length ? (
+                          cityNames.map((city, idx) => (
+                            <div key={idx} className="flex items-center gap-2">
                               <MapPin className="w-4 h-4 text-slate-600" />
-                              <span className="text-sm">{location}</span>
+                              <span className="text-sm text-white">{city}</span>
                             </div>
-                            {index < selectedRoute.route.length - 1 && (
-                              <ArrowRight className="w-4 h-4 text-slate-400" />
-                            )}
-                          </div>
-                        ))}
+                          ))
+                        ) : (
+                          <div className="text-xs text-gray-400">No major cities found</div>
+                        )}
                       </div>
                     </div>
 
@@ -339,51 +409,39 @@ const RoutePlanner: React.FC = () => {
                     <div>
                       <h3 className="font-semibold mb-3 text-monastery-gold">Route Highlights</h3>
                       <div className="flex flex-wrap gap-2 bg-transparent border-white text-white">
-                        {selectedRoute.highlights.map((highlight, index) => (
-                          <Badge key={index} variant="outline" className="text-sm text-white">
-                            {highlight}
-                          </Badge>
-                        ))}
+                        <span className="text-xs text-gray-400">No highlights available</span>
                       </div>
                     </div>
 
-                    {/* Planned Stops */}
+                    {/* Planned Stops - Food, Fuel, Attractions */}
                     <div>
-                      <h3 className="font-semibold mb-3 text-monastery-gold">Planned Stops</h3>
+                      <h3 className="font-semibold mb-3 text-monastery-gold">Planned Stops (Food, Fuel, Attractions)</h3>
                       <div className="space-y-2">
-                        {selectedRoute.stops.map((stop, index) => (
-                          <div key={index} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
-                            <div className="flex items-center gap-2">
-                              <MapPin className="w-4 h-4 text-blue-600" />
-                              <span className="font-medium">{stop.name}</span>
-                              <Badge variant="secondary" className="text-xs">{stop.type}</Badge>
+                        {amenities.length ? (
+                          amenities.map((a, idx) => (
+                            <div key={idx} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                              <div className="flex items-center gap-2">
+                                <MapPin className="w-4 h-4 text-blue-600" />
+                                <span className="font-medium text-black">{a.tags.name || a.tags.amenity || a.tags.tourism || 'Stop'}</span>
+                                <Badge variant="secondary" className="text-xs">
+                                  {a.tags.amenity ? (a.tags.amenity === 'fuel' ? 'Fuel' : a.tags.amenity === 'restaurant' ? 'Food' : a.tags.amenity) : (a.tags.tourism ? 'Attraction' : 'Stop')}
+                                </Badge>
+                              </div>
+                              <div className="flex items-center gap-1 text-sm text-black">
+                                {a.lat && a.lon && (
+                                  <span className="text-xs">({a.lat.toFixed(3)}, {a.lon.toFixed(3)})</span>
+                                )}
+                              </div>
                             </div>
-                            <div className="flex items-center gap-1 text-sm text-slate-600">
-                              <Clock className="w-3 h-3" />
-                              {stop.duration}
-                            </div>
-                          </div>
-                        ))}
+                          ))
+                        ) : (
+                          <span className="text-xs text-gray-400">No planned stops found</span>
+                        )}
                       </div>
                     </div>
 
                     {/* Warnings */}
-                    {selectedRoute.warnings.length > 0 && (
-                      <div>
-                        <h3 className="font-semibold mb-3 flex items-center gap-2 text-monastery-gold">
-                          <AlertCircle className="w-4 h-4 text-orange-600" />
-                          Important Notes
-                        </h3>
-                        <div className="space-y-2">
-                          {selectedRoute.warnings.map((warning, index) => (
-                            <div key={index} className="flex items-start gap-2 p-2 bg-orange-50 rounded">
-                              <AlertCircle className="w-4 h-4 text-orange-600 mt-0.5" />
-                              <span className="text-sm text-orange-800">{warning}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
+                    {/* No warnings available from API */}
                   </CardContent>
                 </Card>
               </div>
@@ -392,27 +450,27 @@ const RoutePlanner: React.FC = () => {
 
           <TabsContent value="routes">
             <div className="space-y-6">
-              {routeOptions.map((route) => (
-                <Card key={route.id} className= "bg-black/60 border-transparent rounded-xl">
+              {routeData ? (
+                <Card className="bg-black/60 border-transparent rounded-xl">
                   <CardHeader>
                     <div className="flex justify-between items-start">
                       <div>
                         <CardTitle className="flex items-center gap-2 text-monastery-gold">
                           <Route className="w-5 h-5 text-green-600" />
-                          {route.name}
+                          Dynamic Route
                         </CardTitle>
                         <div className="flex items-center gap-4 mt-2 text-sm text-white">
                           <span className="flex items-center gap-1 text-white">
                             <Navigation className="w-4 h-4" />
-                            {route.distance}
+                            {routeData.distance}
                           </span>
                           <span className="flex items-center gap-1">
                             <Clock className="w-4 h-4" />
-                            {route.duration}
+                            {routeData.duration}
                           </span>
                           <span className="flex items-center gap-1">
                             <DollarSign className="w-4 h-4" />
-                            {route.cost}
+                            ₹{calculateTotalCost().toLocaleString()}
                           </span>
                         </div>
                       </div>
@@ -421,36 +479,28 @@ const RoutePlanner: React.FC = () => {
                   <CardContent>
                     <div className="grid md:grid-cols-2 gap-4">
                       <div>
-                        <h4 className="font-medium mb-2 text-monastery-gold">Highlights</h4>
-                        <div className="flex flex-wrap gap-1">
-                          {route.highlights.map((highlight, index) => (
-                            <Badge key={index} variant="outline" className="text-xs text-white border-white">
-                              {highlight}
-                            </Badge>
+                        <h4 className="font-medium mb-2 text-monastery-gold">Route Steps</h4>
+                        <div className="flex flex-col gap-1">
+                          {routeData.steps.map((step, idx) => (
+                            <div key={idx} className="flex items-center gap-2">
+                              <MapPin className="w-4 h-4 text-slate-600" />
+                              <span className="text-sm text-white" dangerouslySetInnerHTML={{__html: step.html_instructions}} />
+                              <span className="text-xs text-white">({step.distance.text})</span>
+                            </div>
                           ))}
                         </div>
                       </div>
                       <div>
-                        <h4 className="font-medium mb-2 text-white">Road Condition</h4>
-                        <div className="flex items-center gap-2">
-                          <CheckCircle className={`w-4 h-4 ${
-                            route.roadCondition === 'Excellent' ? 'text-green-600' :
-                            route.roadCondition === 'Good' ? 'text-blue-600' : 'text-orange-600'
-                          }`} />
-                          <span className="text-sm text-white">{route.roadCondition}</span>
-                        </div>
+                        <h4 className="font-medium mb-2 text-white">Overview</h4>
+                        <div className="text-sm text-white">Mode: {travelMode}</div>
+                        <div className="text-sm text-white">Travelers: {travelers}</div>
                       </div>
                     </div>
-                    <Button 
-                      className="mt-4 bg-monastery-gold text-black font-semibold rounded-xl border border-monastery-gold hover:bg-monastery-gold hover:text-black hover:shadow-[0_0_8px_2px_rgba(255,221,51,0.5)] transition-all w-full"
-                      size="sm"
-                      onClick={() => setTravelMode(route.transportMode)}
-                    >
-                      Select This Route
-                    </Button>
                   </CardContent>
                 </Card>
-              ))}
+              ) : (
+                <div className="text-center text-gray-400">No route data. Please plan a route.</div>
+              )}
             </div>
           </TabsContent>
 
@@ -524,19 +574,19 @@ const RoutePlanner: React.FC = () => {
                   <div className="space-y-3">
                     <div className="flex justify-between items-center text-white">
                       <span>Base Transportation Cost</span> 
-                      <span className="font-semibold">{selectedRoute.cost}</span>
+                      <span className="font-semibold">₹{calculateTotalCost().toLocaleString()}</span>
                     </div>
                     <div className="flex justify-between items-center text-white">
                       <span>Fuel Cost</span>
-                      <span className="font-semibold">{selectedRoute.fuelCost}</span>
+                      <span className="font-semibold">N/A</span>
                     </div>
                     <div className="flex justify-between items-center text-white">
                       <span>Toll Charges</span>
-                      <span className="font-semibold">{selectedRoute.tollCost}</span>
+                      <span className="font-semibold">N/A</span>
                     </div>
                     <div className="flex justify-between items-center text-white">
                       <span>Parking Fees</span>
-                      <span className="font-semibold">{selectedRoute.parkingCost}</span>
+                      <span className="font-semibold">N/A</span>
                     </div>
                     {travelers > 1 && (
                       <div className="flex justify-between items-center text-white">
